@@ -23,14 +23,14 @@
   "devDependencies": {
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-typescript": "^7.23.3",
-    "@storybook/addon-essentials": "^7.6.3",
-    "@storybook/addon-interactions": "^7.6.3",
-    "@storybook/addon-links": "^7.6.3",
+    "@storybook/addon-essentials": "^8.0.0-alpha.0",
+    "@storybook/addon-interactions": "^8.0.0-alpha.0",
+    "@storybook/addon-links": "^8.0.0-alpha.0",
     "@storybook/addon-onboarding": "^1.0.9",
-    "@storybook/blocks": "^7.6.3",
-    "@storybook/nextjs": "^7.6.3",
-    "@storybook/react": "^7.6.3",
-    "@storybook/test": "^7.6.3",
+    "@storybook/blocks": "^8.0.0-alpha.0",
+    "@storybook/nextjs": "^8.0.0-alpha.0",
+    "@storybook/react": "^8.0.0-alpha.0",
+    "@storybook/test": "^8.0.0-alpha.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -41,10 +41,11 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-next": "14.0.3",
     "eslint-plugin-storybook": "^0.6.15",
-    "storybook": "^7.6.3",
+    "storybook": "^8.0.0-alpha.0",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack": "^5.89.0"
   },
   "packageManager": "yarn@4.0.2"
 }
