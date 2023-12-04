@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs';
+import path from 'path';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/components/stories/*.@(js|jsx|mjs|ts|tsx)'],
@@ -10,7 +11,12 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: '@storybook/nextjs',
-    options: {},
+    options: {
+      builder: {
+        // Set useSWC to true if you want to try out the experimental SWC compiler in Next.js >= 14.0.0
+        useSWC: true,
+      },
+    },
   },
   docs: {
     autodocs: true,
