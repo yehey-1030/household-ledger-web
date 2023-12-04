@@ -2,7 +2,7 @@
 
 import styled, { ThemeProvider } from 'styled-components';
 import { theme, GlobalStyle } from '@/styles';
-import Header from '@/components/Header';
+import Header from '@/components/common/Header';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
