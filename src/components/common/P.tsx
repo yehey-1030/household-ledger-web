@@ -17,6 +17,7 @@ export interface IPProps extends React.HTMLAttributes<HTMLParagraphElement> {
 }
 
 function P(props: IPProps) {
+  // eslint-disable-next-line react/jsx-props-no-spreading
   return <StyledP {...props} />;
 }
 
