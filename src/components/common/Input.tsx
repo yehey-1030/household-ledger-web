@@ -30,6 +30,7 @@ const Label = styled.label`
   font-weight: ${theme.font.fontWeight.semibold};
   color: ${theme.color.GREY[200]};
   margin-bottom: 0.8rem;
+  width: 100%;
 `;
 
 const StyledInput = styled.input`
