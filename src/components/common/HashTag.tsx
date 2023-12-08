@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import P from './P';
 import { theme } from '@/styles';
 
-interface IHashTagProps {
+interface IHashTagProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
-  onClick?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   isSelected?: boolean;
 }
 
 function HashTag({ label, isSelected = true, onClick }: IHashTagProps) {
   return (
-    <Wrapper onClick={onClick || (() => {})}>
+    <Wrapper onClick={onClick}>
       <Name isSelected={isSelected}>#{label}</Name>
     </Wrapper>
   );
@@ -25,6 +24,7 @@ const Wrapper = styled.button`
   border: none;
   background-color: transparent;
   width: fit-content;
+  padding: 0;
 `;
 
 const Name = styled(P).attrs({

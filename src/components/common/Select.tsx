@@ -91,11 +91,13 @@ const SelectWrapper = styled.ul<{ isOpen: boolean }>`
   width: 100%;
   background-color: ${theme.color.WHITE};
   border-radius: 0.8rem;
+  box-shadow: 0px 1px 4px 0px ${theme.color.GREY[300]};
 
   max-height: ${(props) => (props.isOpen ? 'none' : 0)};
   margin-top: ${(props) => (props.isOpen ? '0.4rem' : 0)};
   overflow: hidden;
   z-index: 5;
+
   @keyframes dropdown {
     0% {
       transform: translateY(-5%);
