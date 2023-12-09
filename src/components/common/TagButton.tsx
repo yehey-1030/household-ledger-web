@@ -1,18 +1,18 @@
-import { ITag } from '@/interfaces/ITag';
 import { theme } from '@/styles';
+import { TagType } from '@/types/tag';
 import React from 'react';
 import styled from 'styled-components';
 
 export interface ITagProps {
   isSelected?: boolean;
-  tagInfo: ITag;
+  tagInfo: TagType;
   onClick?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 function TagButton({ isSelected = false, tagInfo, onClick }: ITagProps) {
   return (
     <StyledButton isSelected={isSelected} onClick={onClick}>
-      {tagInfo.tagName}
+      {tagInfo.name}
     </StyledButton>
   );
 }

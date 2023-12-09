@@ -1,6 +1,7 @@
 import type { Viewport } from 'next';
-import StyledComponentsRegistry from '@/lib/utils/styledRegistry';
+import StyledComponentsRegistry from '@/lib/utils/StyledSheetManager';
 import type { Metadata } from 'next';
+import ReactQueryProvider from '@/lib/utils/ReactQueryProvider';
 
 interface IRootLayoutProps {
   children: React.ReactNode;
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: IRootLayoutProps) {
     <html lang="kr">
       <body>
         <div id="portal" />
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

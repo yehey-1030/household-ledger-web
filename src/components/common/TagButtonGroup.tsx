@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { ITag } from '@/interfaces/ITag';
 import TagButton from './TagButton';
 import { useState } from 'react';
+import { TagType } from '@/types/tag';
 
 export interface ITagGroupProps {
-  tags: ITag[];
+  tags: TagType[];
 }
 
 function TagButtonGroup({ tags }: ITagGroupProps) {
@@ -24,9 +24,9 @@ function TagButtonGroup({ tags }: ITagGroupProps) {
         return (
           <TagButton
             tagInfo={tag}
-            isSelected={selected === tag.tagID}
-            onClick={() => handleTagButtonClicked(tag.tagID)}
-            key={tag.tagID}
+            isSelected={selected === tag.archiveTypeID}
+            onClick={() => handleTagButtonClicked(tag.archiveTypeID)}
+            key={tag.archiveTypeID}
           />
         );
       })}
