@@ -22,12 +22,14 @@ function TagButtonGroup({ tags }: ITagGroupProps) {
     <Wrapper>
       {tags.map((tag) => {
         return (
-          <TagButton
-            tagInfo={tag}
-            isSelected={selected === tag.archiveTypeID}
-            onClick={() => handleTagButtonClicked(tag.archiveTypeID)}
-            key={tag.archiveTypeID}
-          />
+          tag.archiveTypeID !== 6 && (
+            <TagButton
+              tagInfo={tag}
+              isSelected={selected === tag.archiveTypeID}
+              onClick={() => handleTagButtonClicked(tag.archiveTypeID)}
+              key={tag.archiveTypeID}
+            />
+          )
         );
       })}
     </Wrapper>
