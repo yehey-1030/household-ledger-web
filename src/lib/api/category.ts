@@ -1,6 +1,6 @@
 import { apiClient } from '.';
-import { TagType } from '@/types/tag';
+import { CategoryType } from '@/types/tag';
 
-export const getCategories = (): Promise<TagType[]> => {
+export const getCategories = (): Promise<CategoryType[]> => {
   return apiClient.get('/archive-types').then((res) => res.data.data);
 };

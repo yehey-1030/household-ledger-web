@@ -1,11 +1,11 @@
 import { theme } from '@/styles';
-import { TagType } from '@/types/tag';
+import { CategoryType } from '@/types/tag';
 import React from 'react';
 import styled from 'styled-components';
 
 export interface ITagProps {
   isSelected?: boolean;
-  tagInfo: TagType;
+  tagInfo: CategoryType;
   onClick?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 

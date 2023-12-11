@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import TagButton from './TagButton';
 import { useState } from 'react';
-import { TagType } from '@/types/tag';
+import { CategoryType } from '@/types/tag';
 
 export interface ITagGroupProps {
-  tags: TagType[];
+  tags: CategoryType[];
 }
 
 function TagButtonGroup({ tags }: ITagGroupProps) {
