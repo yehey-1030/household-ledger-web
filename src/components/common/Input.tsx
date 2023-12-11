@@ -7,11 +7,11 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: 'text' | 'date' | 'number';
 }
 
-function Input({ label, type = 'text', placeholder }: IInputProps) {
+function Input({ label, type = 'text', placeholder, name, onChange }: IInputProps) {
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <StyledInput type={type} placeholder={placeholder} />
+      <StyledInput type={type} placeholder={placeholder} name={name} onChange={onChange} />
     </Wrapper>
   );
 }
