@@ -1,6 +1,7 @@
 'use client';
 
 import { LedgerCreateParams } from '@/types/ledger';
+import { TagType } from '@/types/tag';
 import React, { useEffect, useState } from 'react';
 
 export const useLedgerCreate = () => {
@@ -30,11 +31,13 @@ export const useLedgerCreate = () => {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleHashTagSelect = (tagID: number) => {
-    if (form.tagList.includes(tagID)) {
-      setForm((f) => ({ ...f, tagList: form.tagList.filter((t) => t !== tagID) }));
+  const handleHashTagSelect = (tag: TagType, currentTags: TagType[]) => {
+    if (form.tagList.includes(tag.tagID)) {
+      const filterList = currentTags.filter((t) => t.parentID === tag.tagID).map((t) => t.tagID);
+
+      setForm((f) => ({ ...f, tagList: form.tagList.filter((t) => t !== tag.tagID && !filterList.includes(t)) }));
     } else {
-      setForm((f) => ({ ...f, tagList: [...form.tagList, tagID] }));
+      setForm((f) => ({ ...f, tagList: [...form.tagList, tag.tagID] }));
     }
   };
 

@@ -1,5 +1,5 @@
 import { theme } from '@/styles';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import TagButtonGroup from '../common/TagButtonGroup';
 import Input from '../common/Input';
@@ -19,12 +19,12 @@ function PostLedger({}: IPostLedgerProps) {
   const { selectableTagList } = useRootTag(form.typeID);
   const { basicTags } = useBasicTags(form.typeID);
   const { childTagList } = useChildTagList(form.tagList);
-  const { data, isLoading } = useQuery({ queryKey: ['categories'], queryFn: () => getCategories() });
+  const { data } = useQuery({ queryKey: ['categories'], queryFn: () => getCategories() });
 
-  useEffect(() => {
-    console.log(form);
-    console.log(childTagList);
-  }, [form]);
+  // React.useEffect(() => {
+  //   console.log(form);
+  //   console.log(childTagList);
+  // }, [form]);
 
   return (
     <Wrapper>
@@ -50,7 +50,7 @@ function PostLedger({}: IPostLedgerProps) {
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}
-              onClick={() => handleHashTagSelect(tag.tagID)}
+              onClick={() => handleHashTagSelect(tag, basicTags)}
             />
           ))}
         {childTagList &&
@@ -59,7 +59,7 @@ function PostLedger({}: IPostLedgerProps) {
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}
-              onClick={() => handleHashTagSelect(tag.tagID)}
+              onClick={() => handleHashTagSelect(tag, childTagList)}
             />
           ))}
       </HashTagWrapper>
