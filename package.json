@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.12.2",
+    "@tanstack/react-query-devtools": "^5.13.5",
     "@tanstack/react-query-next-experimental": "^5.13.4",
     "axios": "^1.6.2",
     "eslint-config-airbnb": "^19.0.4",
