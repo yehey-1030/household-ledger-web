@@ -1,16 +1,17 @@
-import { ITag } from '@/interfaces/ITag';
 import styled from 'styled-components';
 import { HashTag } from '.';
+import { TagType } from '@/types/tag';
 
 interface IHashTagGroupProps {
-  tagList: ITag[];
+  tagList: TagType[];
+  handleSelect: (tagID: number) => void;
 }
 
-function HashTagGroup({ tagList }: IHashTagGroupProps) {
+function HashTagGroup({ tagList, handleSelect }: IHashTagGroupProps) {
   return (
     <Wrapper>
       {tagList.map((tag) => (
-        <HashTag label={tag.tagName} key={tag.tagID} isSelected={false} />
+        <HashTag label={tag.name} key={tag.tagID} isSelected={false} onClick={() => handleSelect(tag.tagID)} />
       ))}
     </Wrapper>
   );

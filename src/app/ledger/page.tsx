@@ -1,13 +1,15 @@
 'use client';
 
+import { Header } from '@/components/common';
 import PostLedger from '@/components/ledgers/PostLedger';
 import React from 'react';
 import styled from 'styled-components';
 
-interface ILedgerProps {}
-function LedgerPage({}: ILedgerProps) {
+// interface ILedgerProps {}
+function LedgerPage() {
   return (
     <Wrapper>
+      <Header title="내역" />
       <PostLedger />
     </Wrapper>
   );
@@ -21,4 +23,5 @@ const Wrapper = styled.div`
   min-height: 100%;
   width: 100%;
   margin: 0 auto;
+  height: 100%;
 `;

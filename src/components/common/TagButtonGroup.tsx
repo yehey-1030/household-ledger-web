@@ -1,23 +1,14 @@
 import styled from 'styled-components';
 import TagButton from './TagButton';
-import { useState } from 'react';
 import { CategoryType } from '@/types/tag';
 
 export interface ITagGroupProps {
   tags: CategoryType[];
+  currentSelected: number;
+  handleClick: (categoryID: number) => void;
 }
 
-function TagButtonGroup({ tags }: ITagGroupProps) {
-  const [selected, setSelected] = useState<number>();
-
-  const handleTagButtonClicked = (tagID: number) => {
-    if (selected === tagID) {
-      setSelected(0);
-    } else {
-      setSelected(tagID);
-    }
-  };
-
+function TagButtonGroup({ tags, handleClick, currentSelected }: ITagGroupProps) {
   return (
     <Wrapper>
       {tags.map((tag) => {
@@ -25,8 +16,8 @@ function TagButtonGroup({ tags }: ITagGroupProps) {
           tag.archiveTypeID !== 6 && (
             <TagButton
               tagInfo={tag}
-              isSelected={selected === tag.archiveTypeID}
-              onClick={() => handleTagButtonClicked(tag.archiveTypeID)}
+              isSelected={currentSelected === tag.archiveTypeID}
+              onClick={() => handleClick(tag.archiveTypeID)}
               key={tag.archiveTypeID}
             />
           )

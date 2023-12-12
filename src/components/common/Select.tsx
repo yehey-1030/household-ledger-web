@@ -1,24 +1,26 @@
-import { ITag } from '@/interfaces/ITag';
 import { theme } from '@/styles';
+import { TagType } from '@/types/tag';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 interface ISelectProps {
   label: string;
-  selectList: ITag[];
+  selectList: TagType[];
+  handleSelect: (tagID: number) => void;
 }
 
-function Select({ label, selectList }: ISelectProps) {
-  const [selected, setSelected] = useState(selectList[0]);
+function Select({ label, selectList, handleSelect }: ISelectProps) {
+  const [selected, setSelected] = useState<TagType>({ tagID: 0, name: '선택' });
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClicked = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const { innerText } = e.currentTarget;
     const tag = selectList.filter((option) => {
-      return option.tagName === innerText;
+      return option.name === innerText;
     });
 
     setSelected(tag[0]);
+    handleSelect(tag[0].tagID);
     setIsOpen(false);
   };
 
@@ -30,14 +32,14 @@ function Select({ label, selectList }: ISelectProps) {
           setIsOpen((open) => !open);
         }}
       >
-        {selected.tagName}
+        {selected ? selected.name : ''}
       </StyledInput>
 
       <SelectWrapper isOpen={isOpen}>
-        {selectList.map((tag) => {
+        {selectList?.map((tag) => {
           return (
             <Option key={tag.tagID} onClick={handleOptionClicked}>
-              {tag.tagName}
+              {tag.name}
             </Option>
           );
         })}
