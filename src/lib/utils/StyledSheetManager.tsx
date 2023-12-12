@@ -44,4 +44,5 @@ const Applayout = styled.div`
   min-height: 100%;
   width: 100%;
   margin: 0 auto;
+  height: 100%;
 `;
