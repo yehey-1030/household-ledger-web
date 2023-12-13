@@ -36,49 +36,43 @@ function PostLedger({}: IPostLedgerProps) {
 
   return (
     <Wrapper>
-      <form>
-        {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
-        <DateSelectWrapper>
-          <DateWrapper>
-            <Input label="날짜" type="date" name="date" onChange={handleInputChange} />
-          </DateWrapper>
-          <DateWrapper>
-            {selectableTagList && selectableTagList?.length !== 0 && (
-              <Select label="카테고리" selectList={selectableTagList} handleSelect={handleRootTagSelect} />
-            )}
-          </DateWrapper>
-        </DateSelectWrapper>
-        <Input label="내역명" placeholder="내역을 입력해주세요" name="title" onChange={handleInputChange} />
-        <Input
-          label="금액"
-          placeholder="금액을 입력해주세요"
-          type="number"
-          name="amount"
-          onChange={handleInputChange}
-        />
-        <Input label="메모" placeholder="메모를 입력해주세요" name="memo" onChange={handleInputChange} />
+      {/* <form> */}
+      {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
+      <DateSelectWrapper>
+        <DateWrapper>
+          <Input label="날짜" type="date" name="date" onChange={handleInputChange} />
+        </DateWrapper>
+        <DateWrapper>
+          {selectableTagList && selectableTagList?.length !== 0 && (
+            <Select label="카테고리" selectList={selectableTagList} handleSelect={handleRootTagSelect} />
+          )}
+        </DateWrapper>
+      </DateSelectWrapper>
+      <Input label="내역명" placeholder="내역을 입력해주세요" name="title" onChange={handleInputChange} />
+      <Input label="금액" placeholder="금액을 입력해주세요" type="number" name="amount" onChange={handleInputChange} />
+      <Input label="메모" placeholder="메모를 입력해주세요" name="memo" onChange={handleInputChange} />
 
-        <HashTagWrapper>
-          {form.typeID === 3 &&
-            basicTags?.map((tag) => (
-              <HashTag
-                label={tag.name}
-                key={tag.tagID}
-                isSelected={form.tagList.includes(tag.tagID)}
-                onClick={() => handleHashTagSelect(tag, basicTags)}
-              />
-            ))}
-          {childTagList &&
-            childTagList.map((tag) => (
-              <HashTag
-                label={tag.name}
-                key={tag.tagID}
-                isSelected={form.tagList.includes(tag.tagID)}
-                onClick={() => handleHashTagSelect(tag, childTagList)}
-              />
-            ))}
-        </HashTagWrapper>
-      </form>
+      <HashTagWrapper>
+        {form.typeID === 3 &&
+          basicTags?.map((tag) => (
+            <HashTag
+              label={tag.name}
+              key={tag.tagID}
+              isSelected={form.tagList.includes(tag.tagID)}
+              onClick={() => handleHashTagSelect(tag, basicTags)}
+            />
+          ))}
+        {childTagList &&
+          childTagList.map((tag) => (
+            <HashTag
+              label={tag.name}
+              key={tag.tagID}
+              isSelected={form.tagList.includes(tag.tagID)}
+              onClick={() => handleHashTagSelect(tag, childTagList)}
+            />
+          ))}
+      </HashTagWrapper>
+      {/* </form> */}
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>

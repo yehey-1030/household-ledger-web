@@ -2,7 +2,9 @@
 
 import { LedgerCreateParams } from '@/types/ledger';
 import { TagType } from '@/types/tag';
+import { useMutation } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
+import { postLedger } from '../api/ledger';
 
 export const useLedgerCreate = () => {
   // const queryClient = useQueryClient();
@@ -18,6 +20,17 @@ export const useLedgerCreate = () => {
 
   // const [selectableTagList, setSelectableTagList] = useState<TagType[]>([]);
   const [checkValid, setCheckValid] = useState(false);
+
+  const { mutate } = useMutation({
+    mutationFn: (data: LedgerCreateParams) => postLedger(data),
+    onSuccess: () => {
+      alert('내역 저장 완료');
+      setForm(defaultForm);
+    },
+    onError: () => {
+      alert('내역 저장 실패');
+    },
+  });
 
   useEffect(() => {
     checkFormValid();
@@ -66,8 +79,7 @@ export const useLedgerCreate = () => {
 
   const handleSubmit = () => {
     if (checkValid) {
-      alert('내역 저장 완료');
-      setForm(defaultForm);
+      mutate(form);
     }
   };
 
