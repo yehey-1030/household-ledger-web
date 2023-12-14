@@ -14,6 +14,7 @@ export const useLedgerCreate = () => {
     date: '',
     tagList: [],
     typeID: 2,
+    memo: '',
   };
 
   const [form, setForm] = useState<LedgerCreateParams>(defaultForm);
@@ -80,6 +81,7 @@ export const useLedgerCreate = () => {
   const handleSubmit = () => {
     if (checkValid) {
       mutate(form);
+      setForm(defaultForm);
     }
   };
 

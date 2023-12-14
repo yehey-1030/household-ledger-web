@@ -31,7 +31,6 @@ function PostLedger({}: IPostLedgerProps) {
 
   // React.useEffect(() => {
   //   console.log(form);
-  //   console.log(childTagList);
   // }, [form]);
 
   return (
@@ -40,7 +39,7 @@ function PostLedger({}: IPostLedgerProps) {
       {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
       <DateSelectWrapper>
         <DateWrapper>
-          <Input label="날짜" type="date" name="date" onChange={handleInputChange} />
+          <Input label="날짜" type="date" name="date" onChange={handleInputChange} value={form.date} />
         </DateWrapper>
         <DateWrapper>
           {selectableTagList && selectableTagList?.length !== 0 && (
@@ -48,9 +47,28 @@ function PostLedger({}: IPostLedgerProps) {
           )}
         </DateWrapper>
       </DateSelectWrapper>
-      <Input label="내역명" placeholder="내역을 입력해주세요" name="title" onChange={handleInputChange} />
-      <Input label="금액" placeholder="금액을 입력해주세요" type="number" name="amount" onChange={handleInputChange} />
-      <Input label="메모" placeholder="메모를 입력해주세요" name="memo" onChange={handleInputChange} />
+      <Input
+        label="내역명"
+        placeholder="내역을 입력해주세요"
+        name="title"
+        onChange={handleInputChange}
+        value={form.title}
+      />
+      <Input
+        label="금액"
+        placeholder="금액을 입력해주세요"
+        type="number"
+        name="amount"
+        onChange={handleInputChange}
+        value={form.amount}
+      />
+      <Input
+        label="메모"
+        placeholder="메모를 입력해주세요"
+        name="memo"
+        onChange={handleInputChange}
+        value={form.memo}
+      />
 
       <HashTagWrapper>
         {form.typeID === 3 &&
