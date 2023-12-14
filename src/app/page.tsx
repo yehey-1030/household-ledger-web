@@ -1,21 +1,17 @@
 'use client';
 
 import { Header } from '@/components/common';
+import LedgerList from '@/components/home/LedgerList';
 
-import PostLedger from '@/components/ledgers/PostLedger';
-import React from 'react';
-import styled from 'styled-components';
+import React, { Suspense } from 'react';
 
 export default function Home() {
   return (
-    <Wrapper>
-      <Header title="HOME" />
-      <PostLedger />
-    </Wrapper>
+    <>
+      <Header title="HOME" goback={false} canCreate />
+      <Suspense fallback={<div>Loading...</div>}>
+        <LedgerList />
+      </Suspense>
+    </>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
