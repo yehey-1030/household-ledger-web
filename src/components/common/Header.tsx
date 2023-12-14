@@ -51,7 +51,8 @@ const Wrapper = styled.header`
   align-items: center;
   justify-content: space-between;
   background-color: ${theme.color.WHITE};
-  position: relative;
+  position: sticky;
+  top: 0;
   padding: 0 1.5rem;
 `;
 

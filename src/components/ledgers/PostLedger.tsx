@@ -11,9 +11,7 @@ import { useLedgerCreate } from '@/lib/hooks/ledger';
 import { HashTag } from '../common';
 import { useBasicTags, useChildTagList, useRootTag } from '@/lib/hooks/tag';
 
-interface IPostLedgerProps {}
-
-function PostLedger({}: IPostLedgerProps) {
+function PostLedger() {
   const {
     form,
     handleInputChange,
@@ -35,7 +33,6 @@ function PostLedger({}: IPostLedgerProps) {
 
   return (
     <Wrapper>
-      {/* <form> */}
       {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
       <DateSelectWrapper>
         <DateWrapper>
@@ -90,7 +87,6 @@ function PostLedger({}: IPostLedgerProps) {
             />
           ))}
       </HashTagWrapper>
-      {/* </form> */}
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>
