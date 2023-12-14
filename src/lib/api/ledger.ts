@@ -1,7 +1,7 @@
-import { LedgerCreateParams } from '@/types/ledger';
+import { LedgerCreateParams, LedgerType } from '@/types/ledger';
 import { apiClient } from '.';
 
-export const getCurrentMonthLedgers = () => {
+export const getCurrentMonthLedgers = (): Promise<LedgerType[]> => {
   return apiClient.get(`/ledgers/current`).then((res) => res.data.data);
 };
 

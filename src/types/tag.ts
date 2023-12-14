@@ -9,3 +9,8 @@ export type TagType = {
   archiveTypeID?: number;
   parentID?: number;
 };
+
+export type ArchiveType = {
+  archiveTypeID: number;
+  name: string;
+};
