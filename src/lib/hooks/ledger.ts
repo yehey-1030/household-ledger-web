@@ -2,9 +2,9 @@
 
 import { LedgerCreateParams } from '@/types/ledger';
 import { TagType } from '@/types/tag';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { postLedger } from '../api/ledger';
+import { getCurrentMonthLedgers, postLedger } from '../api/ledger';
 
 export const useLedgerCreate = () => {
   // const queryClient = useQueryClient();
@@ -94,4 +94,13 @@ export const useLedgerCreate = () => {
     checkValid,
     onSubmit: handleSubmit,
   };
+};
+
+export const useLedgerList = () => {
+  const { data: ledgersData } = useSuspenseQuery({
+    queryKey: ['ledgers', 'current'],
+    queryFn: () => getCurrentMonthLedgers(),
+  });
+
+  return { ledgersData };
 };

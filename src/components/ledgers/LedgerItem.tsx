@@ -3,22 +3,29 @@ import styled from 'styled-components';
 import { theme } from '@/styles';
 import { amountTostring } from '@/lib/utils/string';
 import { P } from '../common';
-import { ITag } from '@/interfaces/ITag';
+import { ArchiveType, TagType } from '@/types/tag';
 
 interface ILedgerItemProps {
   title: string;
   date: string;
   amount: number;
-  tags?: ITag[];
-  category: string;
+  tags?: TagType[];
+  category: ArchiveType;
 }
 
 export default function LedgerItem(props: ILedgerItemProps) {
-  const { title, date, amount, tags, category } = props;
+  const { title, date, amount, category, tags } = props;
+
+  const toShortDate = (target: string) => {
+    const month = target.split('-')[1];
+    const day = target.split('-')[2];
+
+    return `${month}/${day}`;
+  };
   return (
-    <Wrapper>
+    <Wrapper categoryID={category.archiveTypeID.toString()}>
       <DTWrapper>
-        <Date>{date}</Date>
+        <Date>{toShortDate(date)}</Date>
         <Title>{title}</Title>
       </DTWrapper>
       <Amount>{amountTostring(amount)}</Amount>
@@ -26,9 +33,9 @@ export default function LedgerItem(props: ILedgerItemProps) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ categoryID: string }>`
   padding: 0.9rem 1.5rem;
-  background-color: ${theme.color.MAJOR_GREEN[300]};
+  background-color: ${(props) => theme.color.LEDGER_BACKGROUND[props.categoryID]};
   width: 100%;
   height: 4.2rem;
   display: flex;
@@ -52,7 +59,7 @@ const Date = styled(P).attrs({
 `;
 
 const Title = styled(P).attrs({
-  fontSize: theme.font.fontSize[20],
+  fontSize: theme.font.fontSize[16],
   fontWeight: theme.font.fontWeight.semibold,
 })``;
 
