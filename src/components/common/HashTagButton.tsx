@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import P from './P';
 import { theme } from '@/styles';
 
-interface IHashTagProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IHashTagButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   isSelected?: boolean;
 }
 
-function HashTag({ label, isSelected = true, onClick }: IHashTagProps) {
+function HashTagButton({ label, isSelected = true, onClick }: IHashTagButtonProps) {
   return (
     <Wrapper onClick={onClick}>
       <Name isSelected={isSelected}>#{label}</Name>
@@ -16,7 +16,7 @@ function HashTag({ label, isSelected = true, onClick }: IHashTagProps) {
   );
 }
 
-export default HashTag;
+export default HashTagButton;
 
 const Wrapper = styled.button`
   margin: 0.4rem 0.6rem;

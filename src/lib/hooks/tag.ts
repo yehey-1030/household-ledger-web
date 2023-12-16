@@ -3,7 +3,7 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { getChildTagList, getRootTagList } from '../api/tag';
 import { useEffect, useState } from 'react';
-import { TagType } from '@/types/tag';
+import { TagType } from '@/types';
 
 export const useRootTag = (typeID: number) => {
   const { data: selectableTagList } = useQuery({

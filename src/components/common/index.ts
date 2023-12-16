@@ -1,10 +1,11 @@
-import BottomButton from './BottomButton';
-import HashTag from './HashTag';
-import Header from './Header';
-import Input from './Input';
-import P from './P';
-import Select from './Select';
-import TagButton from './TagButton';
-import TagButtonGroup from './TagButtonGroup';
-
-export { Header, P, HashTag, Select, Input, TagButton, TagButtonGroup, BottomButton };
+export { default as BottomButton } from './BottomButton';
+export { default as HashTagButton } from './HashTagButton';
+export { default as HashTagGroup } from './HashTagGroup';
+export { default as Header } from './Header';
+export { default as P } from './P';
+export { default as Select } from './Select';
+export { default as TagButton } from './TagButton';
+export { default as TagButtonGroup } from './TagButtonGroup';
+export { default as Input } from './Input';
+export { default as Icon } from './Icon';
+export { default as IconButton } from './IconButton';

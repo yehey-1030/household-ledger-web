@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { HashTag } from '.';
 import { TagType } from '@/types/tag';
+import HashTagButton from './HashTagButton';
 
 interface IHashTagGroupProps {
   tagList: TagType[];
@@ -11,7 +11,7 @@ function HashTagGroup({ tagList, handleSelect }: IHashTagGroupProps) {
   return (
     <Wrapper>
       {tagList.map((tag) => (
-        <HashTag label={tag.name} key={tag.tagID} isSelected={false} onClick={() => handleSelect(tag.tagID)} />
+        <HashTagButton label={tag.name} key={tag.tagID} isSelected={false} onClick={() => handleSelect(tag.tagID)} />
       ))}
     </Wrapper>
   );

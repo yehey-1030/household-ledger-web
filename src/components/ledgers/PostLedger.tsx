@@ -1,15 +1,10 @@
 import { theme } from '@/styles';
 import React from 'react';
 import styled from 'styled-components';
-import TagButtonGroup from '../common/TagButtonGroup';
-import Input from '../common/Input';
-import Select from '../common/Select';
-import BottomButton from '../common/BottomButton';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
-import { useLedgerCreate } from '@/lib/hooks/ledger';
-import { HashTag } from '../common';
-import { useBasicTags, useChildTagList, useRootTag } from '@/lib/hooks/tag';
+import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate } from '@/lib/hooks';
+import { TagButtonGroup, Select, BottomButton, Input, HashTagButton } from '../common';
 
 function PostLedger() {
   const {
@@ -70,7 +65,7 @@ function PostLedger() {
       <HashTagWrapper>
         {form.typeID === 3 &&
           basicTags?.map((tag) => (
-            <HashTag
+            <HashTagButton
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}
@@ -79,7 +74,7 @@ function PostLedger() {
           ))}
         {childTagList &&
           childTagList.map((tag) => (
-            <HashTag
+            <HashTagButton
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}

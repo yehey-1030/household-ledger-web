@@ -1,7 +1,7 @@
 'use client';
 
 import { Header } from '@/components/common';
-import LedgerList from '@/components/home/LedgerList';
+import { LedgerList } from '@/components/home';
 
 import React, { Suspense } from 'react';
 

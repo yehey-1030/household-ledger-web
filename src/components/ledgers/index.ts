@@ -1,4 +1,2 @@
-import LedgerItem from './LedgerItem';
-import PostLedger from './PostLedger';
-
-export { LedgerItem, PostLedger };
+export { default as LedgerItem } from './LedgerItem';
+export { default as PostLedger } from './PostLedger';

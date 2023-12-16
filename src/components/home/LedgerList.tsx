@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { LedgerItem } from '../ledgers';
-import { useLedgerList } from '@/lib/hooks/ledger';
+import { useLedgerList } from '@/lib/hooks';
 
 export default function LedgerList() {
   const { ledgersData } = useLedgerList();
@@ -13,6 +13,7 @@ export default function LedgerList() {
           date={ledger.date}
           amount={ledger.amount}
           category={ledger.archiveType}
+          tags={ledger.tagList}
         />
       ))}
     </Wrapper>

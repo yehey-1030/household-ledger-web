@@ -1,7 +1,6 @@
 'use client';
 
-import { LedgerCreateParams } from '@/types/ledger';
-import { TagType } from '@/types/tag';
+import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { getCurrentMonthLedgers, postLedger } from '../api/ledger';

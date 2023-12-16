@@ -1,6 +1,5 @@
-import type { Viewport } from 'next';
+import type { Viewport, Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/utils/StyledSheetManager';
-import type { Metadata } from 'next';
 import ReactQueryProvider from '@/lib/utils/ReactQueryProvider';
 
 interface IRootLayoutProps {

@@ -1,7 +1,7 @@
 'use client';
 
 import { Header } from '@/components/common';
-import PostLedger from '@/components/ledgers/PostLedger';
+import { PostLedger } from '@/components/ledgers';
 import React from 'react';
 import styled from 'styled-components';
 
