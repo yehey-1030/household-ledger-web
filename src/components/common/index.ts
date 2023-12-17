@@ -1,3 +1,5 @@
+'use client';
+
 export { default as BottomButton } from './BottomButton';
 export { default as HashTagButton } from './HashTagButton';
 export { default as HashTagGroup } from './HashTagGroup';
@@ -9,3 +11,5 @@ export { default as TagButtonGroup } from './TagButtonGroup';
 export { default as Input } from './Input';
 export { default as Icon } from './Icon';
 export { default as IconButton } from './IconButton';
+export { default as HashTag } from './HashTag';
+export { default as Layout } from './Layout';
