@@ -4,8 +4,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { useServerInsertedHTML } from 'next/navigation';
-import styled, { ServerStyleSheet, StyleSheetManager, ThemeProvider } from 'styled-components';
-import { GlobalStyle, theme } from '@/styles';
+import styled, { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import { GlobalStyle } from '@/styles';
 // import { Header } from '@/components/common';
 
 export default function StyledComponentsRegistry({ children }: { children: React.ReactNode }) {
@@ -29,11 +29,8 @@ export default function StyledComponentsRegistry({ children }: { children: React
 
   return (
     <StyleSheetManager sheet={styledComponentsStyleSheet.instance}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        {/* <Header title="Home" /> */}
-        <Applayout>{children}</Applayout>
-      </ThemeProvider>
+      <GlobalStyle />
+      <Applayout>{children}</Applayout>
     </StyleSheetManager>
   );
 }
