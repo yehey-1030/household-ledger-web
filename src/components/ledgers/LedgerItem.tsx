@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { theme } from '@/styles';
 import { amountTostring } from '@/lib/utils/string';
 import { HashTagGroup, P } from '../common';
 import { ArchiveType, TagType } from '@/types';
+import { theme } from '@/styles';
 
 interface ILedgerItemProps {
   title: string;
@@ -15,6 +15,7 @@ interface ILedgerItemProps {
 
 export default function LedgerItem(props: ILedgerItemProps) {
   const { title, date, amount, category, tags } = props;
+  const [isOpen, setIsOpen] = useState(false);
 
   const toShortDate = (target: string) => {
     const month = target.split('-')[1];
@@ -23,7 +24,7 @@ export default function LedgerItem(props: ILedgerItemProps) {
     return `${month}/${day}`;
   };
   return (
-    <Wrapper categoryID={category.archiveTypeID.toString()}>
+    <Wrapper categoryID={category.archiveTypeID.toString()} onClick={() => setIsOpen(!isOpen)}>
       <BasicWrapper>
         <DTWrapper>
           <Date>{toShortDate(date)}</Date>
@@ -31,8 +32,8 @@ export default function LedgerItem(props: ILedgerItemProps) {
         </DTWrapper>
         <Amount>{amountTostring(amount)}</Amount>
       </BasicWrapper>
-      <ExtendWrapper isOpen>
-        <HashTagGroup tagList={tags ?? []} handleSelect={() => {}} />
+      <ExtendWrapper isOpen={isOpen}>
+        <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
       </ExtendWrapper>
     </Wrapper>
   );
@@ -47,6 +48,11 @@ const Wrapper = styled.div<{ categoryID: string }>`
   flex-direction: column;
   border-radius: 10px;
   margin-bottom: 0.5rem;
+
+  @media screen and (min-width: 641px) {
+    /* width: 28rem; */
+    justify-self: start;
+  }
 `;
 
 const BasicWrapper = styled.div`
@@ -79,4 +85,8 @@ const Amount = styled(P).attrs({
 
 const ExtendWrapper = styled.div<{ isOpen: boolean }>`
   max-height: ${(props) => (props.isOpen ? 'none' : 0)};
+  overflow: hidden;
+  @media screen and (min-width: 641px) {
+    max-height: none;
+  }
 `;
