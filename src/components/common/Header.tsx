@@ -19,7 +19,9 @@ export default function Header({ title, goback = true, canCreate = false }: IHea
           <IconButton iconName="arrow_back_ios" size="2.4rem" />
         </CustomLink>
       ) : (
-        <IconButton iconName="bar_chart" size="2.4rem" />
+        <CustomLink href="/statistics">
+          <IconButton iconName="bar_chart" size="2.4rem" />
+        </CustomLink>
       )}
       <Title>{title}</Title>
 
@@ -45,6 +47,8 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   padding: 0 1.5rem;
+  /* box-shadow: 0px 1px 4px 0px ${theme.color.GREY[300]}; */
+  /* margin-bottom: 1rem; */
 `;
 
 const Title = styled(P).attrs({
