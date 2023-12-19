@@ -3,7 +3,7 @@
 import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { getCurrentMonthLedgers, postLedger } from '../api/ledger';
+import { deleteLedger, getCurrentMonthLedgers, postLedger } from '../api/ledger';
 
 export const useLedgerCreate = () => {
   // const queryClient = useQueryClient();
@@ -102,4 +102,36 @@ export const useLedgerList = () => {
   });
 
   return { ledgersData };
+};
+
+export const useLedgerDelete = () => {
+  const [deleteLedgerID, setDeleteLedgerID] = useState(0);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const { mutate } = useMutation({
+    mutationFn: (param: number) => deleteLedger(param),
+    onSuccess: () => {},
+    onError: () => {},
+  });
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleDeleteClicked = (ledgerID: number) => {
+    setDeleteLedgerID(ledgerID);
+    setModalOpen(true);
+  };
+
+  const handleSubmit = () => {
+    if (deleteLedgerID === 0) {
+      alert('error');
+      closeModal();
+    } else {
+      mutate(deleteLedgerID);
+      closeModal();
+    }
+  };
+
+  return { isModalOpen, closeModal, handleDeleteClicked, handleSubmit };
 };
