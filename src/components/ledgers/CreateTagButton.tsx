@@ -29,7 +29,7 @@ function CreateTagButton({ parentTagList, categoryTypeID }: ICreateTagButton) {
     <>
       <IconButton iconName="new_label" onClick={openModal} size="3rem" />
       {isModalOpen && (
-        <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit}>
+        <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit} buttonLabel="추가">
           <Wrapper>
             <Input label="태그 이름" value={tagForm.name} onChange={handleNameChange} isColored />
             <Select
