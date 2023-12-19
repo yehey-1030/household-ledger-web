@@ -1,4 +1,4 @@
-import { Layout } from '@/components/common';
+import { Header, Layout } from '@/components/common';
 import { PostLedger } from '@/components/ledgers';
 import React from 'react';
 
@@ -6,6 +6,7 @@ import React from 'react';
 function LedgerPage() {
   return (
     <Layout>
+      <Header title="내역" />
       <PostLedger />
     </Layout>
   );
