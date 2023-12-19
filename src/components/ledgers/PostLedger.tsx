@@ -114,7 +114,8 @@ export default React.memo(PostLedger);
 const Wrapper = styled.div`
   background-color: ${theme.color.MAJOR_GREEN[300]};
   border-radius: 4rem 4rem 0 0;
-  filter: drop-shadow(2px -3px 10px rgba(0, 0, 0, 0.12));
+  box-shadow: 2px -2px 10px rgba(0, 0, 0, 0.12);
+
   padding: 3.5rem 1.7rem;
   /* height: calc(100% - 6rem); */
   min-height: calc(100vh - 6rem);
