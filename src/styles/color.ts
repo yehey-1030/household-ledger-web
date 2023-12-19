@@ -21,12 +21,20 @@ export const LEDGER_BACKGROUND: ColorType = {
   5: '#F5E1E1',
 };
 
+export const LEDGER_HASHTAG_COLOR: ColorType = {
+  2: '#D6CF14',
+  3: MAJOR_GREEN[200],
+  4: '#A496C3',
+  5: '#CA9F9F',
+};
+
 const color = {
   WHITE,
   BLACK,
   GREY,
   MAJOR_GREEN,
   LEDGER_BACKGROUND,
+  LEDGER_HASHTAG_COLOR,
 };
 
 export default color;

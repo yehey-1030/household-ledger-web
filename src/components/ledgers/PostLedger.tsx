@@ -1,15 +1,12 @@
 import { theme } from '@/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import TagButtonGroup from '../common/TagButtonGroup';
-import Input from '../common/Input';
-import Select from '../common/Select';
-import BottomButton from '../common/BottomButton';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
-import { useLedgerCreate } from '@/lib/hooks/ledger';
-import { HashTag } from '../common';
-import { useBasicTags, useChildTagList, useRootTag } from '@/lib/hooks/tag';
+import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate } from '@/lib/hooks';
+import { TagButtonGroup, Select, BottomButton, Input, HashTagButton } from '../common';
+import CreateTagButton from './CreateTagButton';
+import { TagType } from '@/types';
 
 function PostLedger() {
   const {
@@ -27,9 +24,16 @@ function PostLedger() {
   const { childTagList } = useChildTagList(form.tagList);
   const { data } = useQuery({ queryKey: ['categories'], queryFn: () => getCategories() });
 
-  // React.useEffect(() => {
-  //   console.log(form);
-  // }, [form]);
+  const [currentTagList, setCurrentTagList] = useState<TagType[]>([]);
+
+  React.useEffect(() => {
+    if (form.tagList.length === 0 && selectableTagList) {
+      setCurrentTagList(selectableTagList);
+    } else if (selectableTagList) {
+      setCurrentTagList(selectableTagList?.filter((tag) => form.tagList.includes(tag.tagID)));
+      setCurrentTagList((prev) => [...prev, ...childTagList]);
+    }
+  }, [form.typeID, form.tagList, childTagList]);
 
   return (
     <Wrapper>
@@ -40,7 +44,13 @@ function PostLedger() {
         </DateWrapper>
         <DateWrapper>
           {selectableTagList && selectableTagList?.length !== 0 && (
-            <Select label="카테고리" selectList={selectableTagList} handleSelect={handleRootTagSelect} />
+            <Select
+              label="카테고리"
+              selectList={selectableTagList.map((tag) => {
+                return { optionID: tag.tagID, name: tag.name };
+              })}
+              handleSelect={handleRootTagSelect}
+            />
           )}
         </DateWrapper>
       </DateSelectWrapper>
@@ -70,7 +80,7 @@ function PostLedger() {
       <HashTagWrapper>
         {form.typeID === 3 &&
           basicTags?.map((tag) => (
-            <HashTag
+            <HashTagButton
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}
@@ -79,7 +89,7 @@ function PostLedger() {
           ))}
         {childTagList &&
           childTagList.map((tag) => (
-            <HashTag
+            <HashTagButton
               label={tag.name}
               key={tag.tagID}
               isSelected={form.tagList.includes(tag.tagID)}
@@ -87,6 +97,7 @@ function PostLedger() {
             />
           ))}
       </HashTagWrapper>
+      <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>

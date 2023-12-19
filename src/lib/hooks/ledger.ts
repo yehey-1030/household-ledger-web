@@ -1,7 +1,6 @@
 'use client';
 
-import { LedgerCreateParams } from '@/types/ledger';
-import { TagType } from '@/types/tag';
+import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { getCurrentMonthLedgers, postLedger } from '../api/ledger';
@@ -35,7 +34,7 @@ export const useLedgerCreate = () => {
 
   useEffect(() => {
     checkFormValid();
-  });
+  }, [form]);
 
   const checkFormValid = () => {
     setCheckValid(true);
@@ -52,7 +51,7 @@ export const useLedgerCreate = () => {
   };
 
   const handleCategorySelect = (categoryID: number) => {
-    setForm((f) => ({ ...f, typeID: categoryID }));
+    setForm((f) => ({ ...f, typeID: categoryID, tagList: [] }));
   };
 
   const handleRootTagSelect = (tagID: number) => {

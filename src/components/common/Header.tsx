@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import P from './P';
-import { theme } from '@/styles';
 import IconButton from './IconButton';
-import { useRouter } from 'next/navigation';
+import { theme } from '@/styles';
+import CustomLink from './CustomLink';
 
 interface IHeaderProps {
   title: string;
@@ -12,30 +12,23 @@ interface IHeaderProps {
 }
 
 export default function Header({ title, goback = true, canCreate = false }: IHeaderProps) {
-  const router = useRouter();
   return (
     <Wrapper>
       {goback ? (
-        <IconButton
-          iconName="arrow_back_ios"
-          size="2.4rem"
-          onClick={() => {
-            router.back();
-          }}
-        />
+        <CustomLink href="/">
+          <IconButton iconName="arrow_back_ios" size="2.4rem" />
+        </CustomLink>
       ) : (
-        <IconButton iconName="bar_chart" size="2.4rem" />
+        <CustomLink href="/statistics">
+          <IconButton iconName="bar_chart" size="2.4rem" />
+        </CustomLink>
       )}
       <Title>{title}</Title>
 
       {canCreate ? (
-        <IconButton
-          iconName="add"
-          size="2.4rem"
-          onClick={() => {
-            router.push('/ledger');
-          }}
-        />
+        <CustomLink href="/ledger">
+          <IconButton iconName="add" size="2.4rem" />
+        </CustomLink>
       ) : (
         <Empty />
       )}
@@ -54,6 +47,8 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   padding: 0 1.5rem;
+  /* box-shadow: 0px 1px 4px 0px ${theme.color.GREY[300]}; */
+  /* margin-bottom: 1rem; */
 `;
 
 const Title = styled(P).attrs({

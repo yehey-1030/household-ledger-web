@@ -1,26 +1,26 @@
 import { theme } from '@/styles';
-import { TagType } from '@/types/tag';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 interface ISelectProps {
   label: string;
-  selectList: TagType[];
-  handleSelect: (tagID: number) => void;
+  selectList: { name: string; optionID: number }[];
+  handleSelect: (optionID: number) => void;
+  selectType?: 'color' | 'none';
 }
 
-function Select({ label, selectList, handleSelect }: ISelectProps) {
-  const [selected, setSelected] = useState<TagType>({ tagID: 0, name: '선택' });
+function Select({ label, selectList, handleSelect, selectType = 'none' }: ISelectProps) {
+  const [selected, setSelected] = useState({ optionID: 0, name: '선택' });
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClicked = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const { innerText } = e.currentTarget;
-    const tag = selectList.filter((option) => {
+    const selectedList = selectList.filter((option) => {
       return option.name === innerText;
     });
 
-    setSelected(tag[0]);
-    handleSelect(tag[0].tagID);
+    setSelected(selectedList[0]);
+    handleSelect(selectedList[0].optionID);
     setIsOpen(false);
   };
 
@@ -28,6 +28,7 @@ function Select({ label, selectList, handleSelect }: ISelectProps) {
     <Wrapper>
       <Label>{label}</Label>
       <StyledInput
+        selectType={selectType}
         onClick={() => {
           setIsOpen((open) => !open);
         }}
@@ -35,11 +36,11 @@ function Select({ label, selectList, handleSelect }: ISelectProps) {
         {selected ? selected.name : ''}
       </StyledInput>
 
-      <SelectWrapper isOpen={isOpen}>
-        {selectList?.map((tag) => {
+      <SelectWrapper isOpen={isOpen} selectType={selectType}>
+        {selectList?.map((option) => {
           return (
-            <Option key={tag.tagID} onClick={handleOptionClicked}>
-              {tag.name}
+            <Option selectType={selectType} key={option.optionID} onClick={handleOptionClicked}>
+              {option.name}
             </Option>
           );
         })}
@@ -64,7 +65,7 @@ const Label = styled.label`
   margin-bottom: 0.8rem;
 `;
 
-const StyledInput = styled.div`
+const StyledInput = styled.div<{ selectType: 'color' | 'none' }>`
   padding: 1.2rem;
   width: 100%;
   height: 4rem;
@@ -73,7 +74,7 @@ const StyledInput = styled.div`
   font-size: ${theme.font.fontSize[14]};
   font-weight: ${theme.font.fontWeight.regular};
   color: ${theme.color.GREY[200]};
-  background-color: ${theme.color.WHITE};
+  background-color: ${(props) => (props.selectType === 'color' ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
   border: none;
   outline: none;
 
@@ -85,19 +86,20 @@ const StyledInput = styled.div`
   cursor: pointer;
 `;
 
-const SelectWrapper = styled.ul<{ isOpen: boolean }>`
+const SelectWrapper = styled.ul<{ isOpen: boolean; selectType: 'color' | 'none' }>`
   position: absolute;
   top: 6.5rem;
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: ${theme.color.WHITE};
+  background-color: ${(props) => (props.selectType === 'color' ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
+
   border-radius: 0.8rem;
   box-shadow: 0px 1px 4px 0px ${theme.color.GREY[300]};
 
-  max-height: ${(props) => (props.isOpen ? 'none' : 0)};
+  max-height: ${(props) => (props.isOpen ? '15rem' : 0)};
   margin-top: ${(props) => (props.isOpen ? '0.4rem' : 0)};
-  overflow: hidden;
+  overflow: ${(props) => (props.isOpen ? 'scroll' : 'hidden')};
   z-index: 5;
 
   @keyframes dropdown {
@@ -110,13 +112,14 @@ const SelectWrapper = styled.ul<{ isOpen: boolean }>`
   }
   animation: dropdown 4s ease;
 `;
-const Option = styled.li`
+const Option = styled.li<{ selectType: 'color' | 'none' }>`
   padding: 0.5rem 1.3rem;
   font-size: ${theme.font.fontSize[14]};
   font-weight: ${theme.font.fontWeight.regular};
   color: ${theme.color.GREY[200]};
-  height: 3rem;
-  background-color: ${theme.color.WHITE};
+  min-height: 3rem;
+  background-color: ${(props) => (props.selectType === 'color' ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
+
   &:hover {
     background-color: ${theme.color.MAJOR_GREEN[100]};
     color: ${theme.color.WHITE};

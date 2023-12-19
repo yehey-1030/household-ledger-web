@@ -14,3 +14,9 @@ export type ArchiveType = {
   archiveTypeID: number;
   name: string;
 };
+
+export type TagCreateParams = {
+  archiveTypeID: number;
+  name: string;
+  parentID?: number;
+};

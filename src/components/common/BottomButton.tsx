@@ -3,13 +3,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 export type ButtonType = 'primary' | 'line';
+export type ButtonSize = 'Large' | 'Medium';
 
 interface IBottomButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   btnType?: ButtonType;
+  btnSize?: ButtonSize;
 }
-function BottomButton({ btnType = 'primary', children, onClick, disabled }: IBottomButtonProps) {
+function BottomButton({ btnType = 'primary', children, onClick, disabled, btnSize = 'Large' }: IBottomButtonProps) {
   return (
-    <Wrapper btnType={btnType} onClick={onClick} disabled={disabled}>
+    <Wrapper btnType={btnType} onClick={onClick} disabled={disabled} btnSize={btnSize}>
       {children}
     </Wrapper>
   );
@@ -17,12 +19,14 @@ function BottomButton({ btnType = 'primary', children, onClick, disabled }: IBot
 
 export default BottomButton;
 
-const Wrapper = styled.button<Pick<IBottomButtonProps, 'btnType' | 'disabled'>>`
+const Wrapper = styled.button<Pick<IBottomButtonProps, 'btnType' | 'disabled' | 'btnSize'>>`
   width: 100%;
-  height: 5.7rem;
-  padding: 1.6rem 3rem;
-  font-size: ${theme.font.fontSize[20]};
+  height: fit-content;
+  padding: ${(props) => (props.btnSize === 'Large' ? '1.6rem 3rem' : '0.8rem 3rem')};
+
+  font-size: ${(props) => (props.btnSize === 'Large' ? theme.font.fontSize[20] : theme.font.fontSize[16])};
   font-weight: ${theme.font.fontWeight.semibold};
+
   display: flex;
   align-items: center;
   justify-content: center;

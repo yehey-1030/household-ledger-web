@@ -5,13 +5,21 @@ import { theme } from '@/styles';
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   type?: 'text' | 'date' | 'number';
+  isColored?: boolean;
 }
 
-function Input({ label, type = 'text', placeholder, name, onChange, value }: IInputProps) {
+function Input({ label, type = 'text', placeholder, name, onChange, value, isColored = false }: IInputProps) {
   return (
     <Wrapper>
       <Label>{label}</Label>
-      <StyledInput type={type} placeholder={placeholder} name={name} onChange={onChange} value={value} />
+      <StyledInput
+        isColored={isColored}
+        type={type}
+        placeholder={placeholder}
+        name={name}
+        onChange={onChange}
+        value={value}
+      />
     </Wrapper>
   );
 }
@@ -33,7 +41,7 @@ const Label = styled.label`
   width: 100%;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ isColored: boolean }>`
   padding: 1.2rem;
   width: 100%;
   height: 4rem;
@@ -42,7 +50,8 @@ const StyledInput = styled.input`
   font-size: ${theme.font.fontSize[14]};
   font-weight: ${theme.font.fontWeight.regular};
   color: ${theme.color.GREY[200]};
-  background-color: ${theme.color.WHITE};
+  background-color: ${(props) => (props.isColored ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
+
   border: none;
   outline: none;
 

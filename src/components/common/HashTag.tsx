@@ -1,34 +1,22 @@
-import React from 'react';
 import styled from 'styled-components';
 import P from './P';
 import { theme } from '@/styles';
 
-interface IHashTagProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface IHashTagProps {
   label: string;
-  isSelected?: boolean;
+  archiveType?: string;
 }
 
-function HashTag({ label, isSelected = true, onClick }: IHashTagProps) {
-  return (
-    <Wrapper onClick={onClick}>
-      <Name isSelected={isSelected}>#{label}</Name>
-    </Wrapper>
-  );
+function HashTag({ label, archiveType = '3' }: IHashTagProps) {
+  return <StyledTag archiveType={archiveType}>#{label}</StyledTag>;
 }
 
 export default HashTag;
 
-const Wrapper = styled.button`
-  margin: 0.4rem 0.6rem;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  width: fit-content;
-  padding: 0;
-`;
-
-const Name = styled(P).attrs({
+const StyledTag = styled(P).attrs({
   fontWeight: theme.font.fontWeight.semibold,
-})<{ isSelected: boolean }>`
-  color: ${(props) => (props.isSelected ? theme.color.MAJOR_GREEN[200] : theme.color.GREY[100])};
+  fontSize: theme.font.fontSize[14],
+})<{ archiveType: string }>`
+  color: ${(props) => theme.color.LEDGER_HASHTAG_COLOR[props.archiveType]};
+  margin: 1rem 0.3rem 0rem;
 `;

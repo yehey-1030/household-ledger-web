@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { LedgerItem } from '../ledgers';
-import { useLedgerList } from '@/lib/hooks/ledger';
+import { useLedgerList } from '@/lib/hooks';
 
 export default function LedgerList() {
   const { ledgersData } = useLedgerList();
@@ -13,6 +13,7 @@ export default function LedgerList() {
           date={ledger.date}
           amount={ledger.amount}
           category={ledger.archiveType}
+          tags={ledger.tagList}
         />
       ))}
     </Wrapper>
@@ -22,4 +23,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 1.7rem 3.5rem;
+
+  @media screen and (min-width: 641px) {
+    display: grid;
+    /* flex-wrap: wrap; */
+    grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+    column-gap: 1rem;
+  }
 `;
