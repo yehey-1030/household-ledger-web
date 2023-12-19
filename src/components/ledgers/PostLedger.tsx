@@ -1,10 +1,12 @@
 import { theme } from '@/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
 import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate } from '@/lib/hooks';
 import { TagButtonGroup, Select, BottomButton, Input, HashTagButton } from '../common';
+import CreateTagButton from './CreateTagButton';
+import { TagType } from '@/types';
 
 function PostLedger() {
   const {
@@ -22,9 +24,16 @@ function PostLedger() {
   const { childTagList } = useChildTagList(form.tagList);
   const { data } = useQuery({ queryKey: ['categories'], queryFn: () => getCategories() });
 
-  // React.useEffect(() => {
-  //   console.log(form);
-  // }, [form]);
+  const [currentTagList, setCurrentTagList] = useState<TagType[]>([]);
+
+  React.useEffect(() => {
+    if (form.tagList.length === 0 && selectableTagList) {
+      setCurrentTagList(selectableTagList);
+    } else if (selectableTagList) {
+      setCurrentTagList(selectableTagList?.filter((tag) => form.tagList.includes(tag.tagID)));
+      setCurrentTagList((prev) => [...prev, ...childTagList]);
+    }
+  }, [form.typeID, form.tagList, childTagList]);
 
   return (
     <Wrapper>
@@ -35,7 +44,13 @@ function PostLedger() {
         </DateWrapper>
         <DateWrapper>
           {selectableTagList && selectableTagList?.length !== 0 && (
-            <Select label="카테고리" selectList={selectableTagList} handleSelect={handleRootTagSelect} />
+            <Select
+              label="카테고리"
+              selectList={selectableTagList.map((tag) => {
+                return { optionID: tag.tagID, name: tag.name };
+              })}
+              handleSelect={handleRootTagSelect}
+            />
           )}
         </DateWrapper>
       </DateSelectWrapper>
@@ -82,6 +97,7 @@ function PostLedger() {
             />
           ))}
       </HashTagWrapper>
+      <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>
