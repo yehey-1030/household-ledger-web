@@ -1,9 +1,9 @@
 'use client';
 
-import { useQueries, useQuery } from '@tanstack/react-query';
-import { getChildTagList, getRootTagList } from '../api/tag';
+import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getChildTagList, getRootTagList, postTag } from '../api/tag';
 import { useEffect, useState } from 'react';
-import { TagType } from '@/types';
+import { TagCreateParams, TagType } from '@/types';
 
 export const useRootTag = (typeID: number) => {
   const { data: selectableTagList } = useQuery({
@@ -60,4 +60,81 @@ export const useChildTagList = (tagList: number[]) => {
   }, [queryResult.data]);
 
   return { childTagList };
+};
+
+export const useTagCreate = () => {
+  const defaultForm = {
+    archiveTypeID: 0,
+    name: '',
+    parentID: 0,
+  };
+
+  const [tagForm, setTagForm] = useState<TagCreateParams>(defaultForm);
+  const [isValid, setValid] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setValid(true);
+    if (tagForm.name === '') {
+      setValid(false);
+    } else if (tagForm.archiveTypeID === 0) {
+      setValid(false);
+    } else if (tagForm.parentID === 0) {
+      const { parentID, ...form } = tagForm;
+      setTagForm(form);
+    }
+  }, [tagForm]);
+
+  const { mutate } = useMutation({
+    mutationFn: (data: TagCreateParams) => postTag(data),
+    onSuccess: () => {
+      setTagForm(defaultForm);
+      if (tagForm.parentID) {
+        queryClient.invalidateQueries({ queryKey: ['childTag', tagForm.parentID] });
+      }
+      closeModal();
+    },
+    onError: () => {
+      alert('태그 생성 실패');
+    },
+  });
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const setArchvieType = (typeID: number) => {
+    setTagForm((prev) => ({ ...prev, archiveTypeID: typeID }));
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTagForm((prev) => ({ ...prev, name: e.target.value }));
+  };
+
+  const handleParentTagSelect = (parentID: number) => {
+    setTagForm((prev) => ({ ...prev, parentID }));
+  };
+
+  const handleSubmit = () => {
+    if (isValid) {
+      mutate(tagForm);
+    } else {
+      alert('이름을 채워주세요');
+    }
+  };
+  return {
+    tagForm,
+    isModalOpen,
+    openModal,
+    closeModal,
+    setArchvieType,
+    handleNameChange,
+    handleParentTagSelect,
+    handleSubmit,
+  };
 };
