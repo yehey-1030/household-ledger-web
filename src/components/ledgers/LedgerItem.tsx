@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { amountTostring } from '@/lib/utils/string';
-import { HashTagGroup, IconButton, P } from '../common';
+import { HashTagGroup, P } from '../common';
 import { ArchiveType, TagType } from '@/types';
 import { theme } from '@/styles';
+import DeleteLedgerButton from './DeleteLedgerButton';
 
 interface ILedgerItemProps {
+  ledgerID: number;
   title: string;
   date: string;
   amount: number;
@@ -15,7 +17,7 @@ interface ILedgerItemProps {
 }
 
 export default function LedgerItem(props: ILedgerItemProps) {
-  const { title, date, amount, category, tags, memo } = props;
+  const { title, date, amount, category, tags, memo, ledgerID } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const toShortDate = (target: string) => {
@@ -37,7 +39,7 @@ export default function LedgerItem(props: ILedgerItemProps) {
         <Memo>{memo}</Memo>
         <TagIconWrapper>
           <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
-          <IconButton iconName="delete" color={theme.color.GREY[200]} />
+          <DeleteLedgerButton ledgerID={ledgerID} />
         </TagIconWrapper>
       </ExtendWrapper>
     </Wrapper>
