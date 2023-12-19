@@ -8,9 +8,10 @@ interface IModalProps {
   onComplete?: () => void;
   children?: React.ReactNode;
   title: string;
+  buttonLabel: string;
 }
 
-function Modal({ onClose, onComplete, children, title }: IModalProps) {
+function Modal({ onClose, onComplete, children, title, buttonLabel }: IModalProps) {
   const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
@@ -20,7 +21,7 @@ function Modal({ onClose, onComplete, children, title }: IModalProps) {
         <Title>{title}</Title>
         {children}
         <BottomButton btnSize="Medium" onClick={onComplete}>
-          추가
+          {buttonLabel}
         </BottomButton>
       </ModalWrapper>
     </Overlay>
