@@ -18,5 +18,5 @@ const StyledTag = styled(P).attrs({
   fontSize: theme.font.fontSize[14],
 })<{ archiveType: string }>`
   color: ${(props) => theme.color.LEDGER_HASHTAG_COLOR[props.archiveType]};
-  margin: 1rem 0.3rem 0rem;
+  margin: 0rem 0.3rem;
 `;

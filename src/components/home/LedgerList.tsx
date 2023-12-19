@@ -14,6 +14,7 @@ export default function LedgerList() {
           amount={ledger.amount}
           category={ledger.archiveType}
           tags={ledger.tagList}
+          memo={ledger.memo}
         />
       ))}
     </Wrapper>

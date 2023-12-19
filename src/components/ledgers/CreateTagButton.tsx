@@ -27,7 +27,7 @@ function CreateTagButton({ parentTagList, categoryTypeID }: ICreateTagButton) {
 
   return (
     <>
-      <IconButton iconName="new_label" onClick={openModal} />
+      <IconButton iconName="new_label" onClick={openModal} size="3rem" />
       {isModalOpen && (
         <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit}>
           <Wrapper>
