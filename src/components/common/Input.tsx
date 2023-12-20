@@ -11,7 +11,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function Input({ label, type = 'text', placeholder, name, onChange, value, isColored = false }: IInputProps) {
   return (
     <Wrapper>
-      {label ?? <Label>{label}</Label>}
+      {label && <Label>{label}</Label>}
       <StyledInput
         isColored={isColored}
         type={type}
