@@ -1,5 +1,5 @@
 import { TagType } from '@/types';
-import { Modal, Input, Select, IconButton } from '../common';
+import { Modal, Input, Select, HashTagButton } from '../common';
 import styled from 'styled-components';
 import { useTagCreate } from '@/lib/hooks';
 import { useEffect } from 'react';
@@ -27,7 +27,7 @@ function CreateTagButton({ parentTagList, categoryTypeID }: ICreateTagButton) {
 
   return (
     <>
-      <IconButton iconName="new_label" onClick={openModal} size="3rem" />
+      <HashTagButton label="추가" onClick={openModal} />
       {isModalOpen && (
         <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit} buttonLabel="추가">
           <Wrapper>

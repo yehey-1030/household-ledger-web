@@ -96,8 +96,8 @@ function PostLedger() {
               onClick={() => handleHashTagSelect(tag, childTagList)}
             />
           ))}
+        <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       </HashTagWrapper>
-      <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>
@@ -159,4 +159,5 @@ const HashTagWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
 `;

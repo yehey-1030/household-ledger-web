@@ -24,4 +24,7 @@ const Wrapper = styled.button`
   outline: none;
   border: none;
   background-color: transparent;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 `;
