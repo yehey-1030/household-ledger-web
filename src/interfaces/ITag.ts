@@ -1,4 +1,6 @@
 export interface ITag {
   tagID: number;
-  tagName: string;
+  name: string;
+  archiveTypeID?: number;
+  parentID?: number;
 }
