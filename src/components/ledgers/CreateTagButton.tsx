@@ -23,7 +23,7 @@ function CreateTagButton({ parentTagList, categoryTypeID }: ICreateTagButton) {
 
   useEffect(() => {
     setArchvieType(categoryTypeID);
-  }, []);
+  }, [categoryTypeID]);
 
   return (
     <>

@@ -15,7 +15,7 @@ function TagStatisticItem({ tagName, amount, percentage }: ITagStatisticItemProp
       <Wrapper>
         <HashTagButton isSelected label={tagName} />
         <AmountText>
-          {amountTostring(amount)} | {percentage}%
+          {amountTostring(amount)} ・ {percentage}%
         </AmountText>
       </Wrapper>
       <Divider />

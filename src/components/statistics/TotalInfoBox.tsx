@@ -26,7 +26,7 @@ function TotalInfoBox({ label, typeID }: ITotalInfoBoxProps) {
     <Wrapper>
       <Box onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
         <DateText>
-          {currentDate.start}~{currentDate.end}
+          {currentDate.start} ~ {currentDate.end}
         </DateText>
         <Label>{label}</Label>
         <Amount>1,000,000원</Amount>
@@ -43,13 +43,13 @@ export default TotalInfoBox;
 
 const Wrapper = styled.div`
   width: 100%;
-  margin-bottom: 2.5rem;
+  margin: 1.5rem 0 2.5rem;
 `;
 const Box = styled.div`
   width: 100%;
   background-color: ${theme.color.MAJOR_GREEN[200]};
   border-radius: 1.5rem;
-  padding: 0.8rem 1.8rem 1.5rem 1.3rem;
+  padding: 0.8rem 1.8rem 1.5rem 1.8rem;
 
   display: grid;
   grid-template:
@@ -89,6 +89,7 @@ const ExtendWrapper = styled.div<{ isOpen: boolean }>`
   column-gap: 1rem;
 
   max-height: ${(props) => (props.isOpen ? 'none' : 0)};
+  margin-top: ${(props) => (props.isOpen ? '1rem' : 0)};
 
   overflow: hidden;
 `;
