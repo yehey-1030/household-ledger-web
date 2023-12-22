@@ -2,18 +2,27 @@ import styled from 'styled-components';
 import { Divider, P } from '../common';
 import { theme } from '@/styles';
 import TagStatisticItem from './TagStatisticItem';
+import { IStatistic } from '@/interfaces/statistics';
 
 interface ITagStatisticListProps {
   title: string;
+  statisticList: IStatistic[];
+  totalAmount: number;
 }
 
-function TagStatisticList({ title }: ITagStatisticListProps) {
+function TagStatisticList({ title, statisticList, totalAmount }: ITagStatisticListProps) {
   return (
     <Wrapper>
       <Title>{title}</Title>
       <Divider />
-      {mock.map((m) => {
-        return <TagStatisticItem tagName={m.tagName} amount={m.amount} percentage={m.percentage} />;
+      {statisticList.map((statistic) => {
+        return (
+          <TagStatisticItem
+            tagName={statistic.tagName}
+            amount={statistic.totalAmount}
+            percentage={(statistic.totalAmount / totalAmount) * 100}
+          />
+        );
       })}
     </Wrapper>
   );
@@ -30,13 +39,3 @@ const Title = styled(P).attrs({
 })`
   margin-bottom: 0.8rem;
 `;
-
-const mock = [
-  { tagName: '식비', amount: 100000, percentage: 10 },
-  { tagName: '생활비', amount: 100000, percentage: 10 },
-  { tagName: '꾸밈비', amount: 100000, percentage: 10 },
-  { tagName: '건강비', amount: 100000, percentage: 10 },
-  { tagName: '유흥비', amount: 100000, percentage: 10 },
-  { tagName: '자기계발', amount: 100000, percentage: 10 },
-  { tagName: '경조사비', amount: 100000, percentage: 10 },
-];

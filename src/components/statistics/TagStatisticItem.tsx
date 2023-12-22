@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Divider, HashTagButton, P } from '../common';
 import { theme } from '@/styles';
-import { amountTostring } from '@/lib/utils/string';
+import { amountTostring, setPointToNumber } from '@/lib/utils/string';
 
 interface ITagStatisticItemProps {
   tagName: string;
@@ -15,7 +15,7 @@ function TagStatisticItem({ tagName, amount, percentage }: ITagStatisticItemProp
       <Wrapper>
         <HashTagButton isSelected label={tagName} />
         <AmountText>
-          {amountTostring(amount)} ・ {percentage}%
+          {amountTostring(amount)} ・ {setPointToNumber(percentage)}
         </AmountText>
       </Wrapper>
       <Divider />

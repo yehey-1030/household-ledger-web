@@ -1,39 +1,48 @@
 import { theme } from '@/styles';
 import styled from 'styled-components';
 import { Input, P } from '../common';
-import { useState } from 'react';
-import { formatDate, getFirstDay, getLastDay } from '@/lib/utils/string';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { defaultStaticFilterInitialValue, defaultStatisticFilter } from '@/lib/store/statistics';
+import { amountTostring } from '@/lib/utils/string';
 
 interface ITotalInfoBoxProps {
   label: string;
   typeID: number;
+  totalAmount: number;
 }
 
-function TotalInfoBox({ label, typeID }: ITotalInfoBoxProps) {
+function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [currentDate, setCurrentDate] = useState({
-    start: formatDate(getFirstDay(new Date())),
-    end: formatDate(getLastDay(new Date())),
-  });
+
+  const [filter, setFilter] = useRecoilState(defaultStatisticFilter);
+
+  useEffect(() => {
+    setFilter({
+      start: defaultStaticFilterInitialValue.start,
+      end: defaultStaticFilterInitialValue.end,
+      archiveTypeID: typeID,
+    });
+  }, []);
 
   const customDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setCurrentDate((prev) => ({ ...prev, [name]: value }));
+    setFilter((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <Wrapper>
       <Box onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
         <DateText>
-          {currentDate.start} ~ {currentDate.end}
+          {filter.start} ~ {filter.end}
         </DateText>
         <Label>{label}</Label>
-        <Amount>1,000,000원</Amount>
+        <Amount>{amountTostring(totalAmount)}</Amount>
       </Box>
       <ExtendWrapper isOpen={isDatePickerOpen}>
-        <Input type="date" isColored value={currentDate.start} name="start" onChange={customDate} />
-        <Input type="date" isColored value={currentDate.end} name="end" onChange={customDate} />
+        <Input type="date" isColored value={filter.start} name="start" onChange={customDate} />
+        <Input type="date" isColored value={filter.end} name="end" onChange={customDate} />
       </ExtendWrapper>
     </Wrapper>
   );
@@ -81,6 +90,7 @@ const Label = styled(InfoText)`
 const Amount = styled(InfoText)`
   grid-area: amount;
   text-align: right;
+  justify-self: end;
 `;
 
 const ExtendWrapper = styled.div<{ isOpen: boolean }>`
