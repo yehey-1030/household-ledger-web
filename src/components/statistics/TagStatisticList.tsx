@@ -18,9 +18,10 @@ function TagStatisticList({ title, statisticList, totalAmount }: ITagStatisticLi
       {statisticList.map((statistic) => {
         return (
           <TagStatisticItem
+            tagID={statistic.tagID}
             tagName={statistic.tagName}
-            amount={statistic.totalAmount}
-            percentage={(statistic.totalAmount / totalAmount) * 100}
+            currentAmount={statistic.totalAmount}
+            totalAmount={totalAmount}
           />
         );
       })}

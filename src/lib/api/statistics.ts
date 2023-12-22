@@ -14,7 +14,7 @@ export const getBasicTagStatisticListByArchiveType = (params: DefaultStatisticFi
   return apiClient.get(`/statistic/tags/basic`, { params }).then((res) => res.data.data);
 };
 
-export const getTagStatisticByTag = (query: IStatisticRequest): Promise<IStatistic[]> => {
+export const getTagStatisticByTag = (query: IStatisticRequest): Promise<IStatistic> => {
   const { tagID, ...params } = query;
   return apiClient.get(`/statistic/tags/${tagID}`, { params }).then((res) => res.data.data);
 };

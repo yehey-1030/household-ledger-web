@@ -14,7 +14,7 @@ function Statistic() {
 
   useEffect(() => {
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 500);
+    setTimeout(() => setIsLoading(false), 250);
   }, [filter]);
 
   return (
