@@ -4,6 +4,13 @@ export function amountTostring(amount: number) {
   return result;
 }
 
+export function setPointToNumber(percentage: number) {
+  if (Number.isNaN(percentage)) {
+    return `0.0%`;
+  }
+  return `${percentage.toFixed(1)}%`;
+}
+
 export function formatDate(date: Date) {
   function padTo2Digits(num: number) {
     return num.toString().padStart(2, '0');
