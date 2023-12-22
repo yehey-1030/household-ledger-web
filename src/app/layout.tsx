@@ -3,7 +3,6 @@ import StyledComponentsRegistry from '@/lib/utils/StyledSheetManager';
 import ReactQueryProvider from '@/lib/utils/ReactQueryProvider';
 import { CustomIconDescriptorType } from '@/types/custom';
 import RecoilProvider from '@/lib/utils/RecoilProvider';
-import { Header } from '@/components/common';
 
 interface IRootLayoutProps {
   children: React.ReactNode;
@@ -36,10 +35,7 @@ export default function RootLayout({ children }: IRootLayoutProps) {
         <div id="portal" />
         <RecoilProvider>
           <StyledComponentsRegistry>
-            <ReactQueryProvider>
-              <Header title="HOME" goback={false} canCreate />
-              {children}
-            </ReactQueryProvider>
+            <ReactQueryProvider>{children}</ReactQueryProvider>
           </StyledComponentsRegistry>
         </RecoilProvider>
       </body>
