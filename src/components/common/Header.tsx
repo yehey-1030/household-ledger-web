@@ -80,6 +80,6 @@ const Title = styled(P).attrs({
 `;
 
 const Empty = styled.div`
-  min-width: 3.6rem;
+  min-width: 2.4rem;
   min-height: 6rem;
 `;
