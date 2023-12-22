@@ -86,7 +86,6 @@ export const useTagCreate = () => {
       const { parentID, ...form } = tagForm;
       setTagForm(form);
     }
-    console.log(tagForm);
   }, [tagForm]);
 
   const { mutate } = useMutation({

@@ -1,3 +1,4 @@
-import { ArchiveType } from '.';
+import { IStatisticRequest, IStatistic } from '@/interfaces/statistics';
 
-export type DefaultStatisticFilter = { start: string; end: string } & Pick<ArchiveType, 'archiveTypeID'>;
+export type DefaultStatisticFilter = Omit<IStatisticRequest, 'tagID'>;
+export type TotalAmountType = Pick<IStatistic, 'totalAmount'>;
