@@ -5,6 +5,7 @@ import { HashTagGroup, P } from '../common';
 import { ArchiveType, TagType } from '@/types';
 import { theme } from '@/styles';
 import DeleteLedgerButton from './DeleteLedgerButton';
+import { getValidKey } from '@/styles/color';
 
 interface ILedgerItemProps {
   ledgerID: number;
@@ -48,7 +49,7 @@ export default function LedgerItem(props: ILedgerItemProps) {
 
 const Wrapper = styled.div<{ categoryID: string }>`
   padding: 1.2rem 1.5rem;
-  background-color: ${(props) => theme.color.LEDGER_BACKGROUND[props.categoryID]};
+  background-color: ${(props) => theme.color.LEDGER_BACKGROUND[getValidKey(props.categoryID)]};
   width: 100%;
   /* height: 4.2rem; */
   display: flex;
