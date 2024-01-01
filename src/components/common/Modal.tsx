@@ -2,6 +2,7 @@ import { theme } from '@/styles';
 import styled from 'styled-components';
 import P from './P';
 import BottomButton from './BottomButton';
+import Portal from '@/lib/utils/Portal';
 
 interface IModalProps {
   onClose: () => void;
@@ -15,16 +16,19 @@ function Modal({ onClose, onComplete, children, title, buttonLabel }: IModalProp
   const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
+
   return (
-    <Overlay onClick={onClose}>
-      <ModalWrapper onClick={handleWrapperClick}>
-        <Title>{title}</Title>
-        {children}
-        <BottomButton btnSize="Medium" onClick={onComplete}>
-          {buttonLabel}
-        </BottomButton>
-      </ModalWrapper>
-    </Overlay>
+    <Portal>
+      <Overlay onClick={onClose}>
+        <ModalWrapper onClick={handleWrapperClick}>
+          <Title>{title}</Title>
+          {children}
+          <BottomButton btnSize="Medium" onClick={onComplete}>
+            {buttonLabel}
+          </BottomButton>
+        </ModalWrapper>
+      </Overlay>
+    </Portal>
   );
 }
 
