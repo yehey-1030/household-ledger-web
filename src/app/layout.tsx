@@ -32,10 +32,12 @@ export default function RootLayout({ children }: IRootLayoutProps) {
   return (
     <html lang="kr">
       <body>
-        <div id="portal" />
         <RecoilProvider>
           <StyledComponentsRegistry>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
+            <ReactQueryProvider>
+              <div id="portal" />
+              {children}
+            </ReactQueryProvider>
           </StyledComponentsRegistry>
         </RecoilProvider>
       </body>
