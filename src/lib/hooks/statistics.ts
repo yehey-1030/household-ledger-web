@@ -1,6 +1,6 @@
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
-import { defaultStatisticFilter } from '../store/statistics';
+import { defaultStatisticFilter } from '../store';
 import {
   getBasicTagStatisticListByArchiveType,
   getRootTagStatisticListByArchiveType,
