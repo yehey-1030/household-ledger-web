@@ -55,7 +55,7 @@ const StyledInput = styled.input<{ isColored: boolean }>`
   border: none;
   outline: none;
 
-  ::placeholder {
+  &::placeholder {
     color: ${theme.color.GREY[300]};
     font-size: ${theme.font.fontSize[14]};
     font-weight: ${theme.font.fontWeight.regular};
