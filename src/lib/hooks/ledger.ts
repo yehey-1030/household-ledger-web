@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { deleteLedger, getCurrentMonthLedgers, postLedger } from '../api/ledger';
 
 export const useLedgerCreate = () => {
-  // const queryClient = useQueryClient();
   const defaultForm = {
     title: '',
     amount: 0,
@@ -18,7 +17,6 @@ export const useLedgerCreate = () => {
 
   const [form, setForm] = useState<LedgerCreateParams>(defaultForm);
 
-  // const [selectableTagList, setSelectableTagList] = useState<TagType[]>([]);
   const [checkValid, setCheckValid] = useState(false);
 
   const { mutate } = useMutation({

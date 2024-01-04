@@ -9,6 +9,7 @@ export const useRootTag = (typeID: number) => {
   const { data: selectableTagList } = useQuery({
     queryKey: ['rootTag', typeID],
     queryFn: () => getRootTagList(typeID),
+    staleTime: Infinity,
   });
 
   return { selectableTagList };
@@ -18,6 +19,7 @@ export const useChildTags = (parentID: number) => {
   const { data: childTagList } = useQuery({
     queryKey: ['childTag', parentID],
     queryFn: () => getChildTagList(parentID),
+    staleTime: Infinity,
   });
 
   return { childTagList };
@@ -29,6 +31,7 @@ export const useBasicTags = (typeID: number) => {
     // basic tag id 고정 필요
     queryFn: () => getRootTagList(6),
     enabled: typeID === 3,
+    staleTime: Infinity,
   });
 
   return { basicTags };
@@ -39,7 +42,7 @@ export const useChildTagList = (tagList: number[]) => {
 
   const queryResult = useQueries({
     queries: tagList.map((tag) => {
-      return { queryKey: ['childTag', tag], queryFn: () => getChildTagList(tag) };
+      return { queryKey: ['childTag', tag], queryFn: () => getChildTagList(tag), staleTime: Infinity };
     }),
     combine: (results) => {
       return {
