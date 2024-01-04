@@ -7,14 +7,20 @@ interface IHashTagGroupProps {
   tagList: TagType[];
   handleSelect?: (tagID: number) => void;
   typeID?: string;
+  isSelected?: boolean;
 }
 
-function HashTagGroup({ tagList, handleSelect, typeID = '3' }: IHashTagGroupProps) {
+function HashTagGroup({ tagList, handleSelect, typeID = '3', isSelected = false }: IHashTagGroupProps) {
   return (
     <Wrapper>
       {tagList.map((tag) =>
         handleSelect ? (
-          <HashTagButton label={tag.name} key={tag.tagID} isSelected={false} onClick={() => handleSelect(tag.tagID)} />
+          <HashTagButton
+            label={tag.name}
+            key={tag.tagID}
+            isSelected={isSelected}
+            onClick={() => handleSelect(tag.tagID)}
+          />
         ) : (
           <HashTag label={tag.name} key={tag.tagID} archiveType={typeID} />
         ),

@@ -2,28 +2,33 @@ import { theme } from '@/styles';
 import styled from 'styled-components';
 import P from './P';
 import BottomButton from './BottomButton';
+import Portal from '@/lib/utils/Portal';
 
 interface IModalProps {
   onClose: () => void;
   onComplete?: () => void;
   children?: React.ReactNode;
   title: string;
+  buttonLabel: string;
 }
 
-function Modal({ onClose, onComplete, children, title }: IModalProps) {
+function Modal({ onClose, onComplete, children, title, buttonLabel }: IModalProps) {
   const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
+
   return (
-    <Overlay onClick={onClose}>
-      <ModalWrapper onClick={handleWrapperClick}>
-        <Title>{title}</Title>
-        {children}
-        <BottomButton btnSize="Medium" onClick={onComplete}>
-          추가
-        </BottomButton>
-      </ModalWrapper>
-    </Overlay>
+    <Portal>
+      <Overlay onClick={onClose}>
+        <ModalWrapper onClick={handleWrapperClick}>
+          <Title>{title}</Title>
+          {children}
+          <BottomButton btnSize="Medium" onClick={onComplete}>
+            {buttonLabel}
+          </BottomButton>
+        </ModalWrapper>
+      </Overlay>
+    </Portal>
   );
 }
 

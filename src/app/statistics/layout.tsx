@@ -1,13 +1,13 @@
 import { Header, Layout } from '@/components/common';
 import React from 'react';
 
-interface ILedgerLayoutProps {
+interface IStatisticsLayoutProps {
   children: React.ReactNode;
 }
-export default function LedgerLayout({ children }: ILedgerLayoutProps) {
+export default function StatisticsLayout({ children }: IStatisticsLayoutProps) {
   return (
     <Layout>
-      <Header title="내역" />
+      <Header title="통계" />
       {children}
     </Layout>
   );

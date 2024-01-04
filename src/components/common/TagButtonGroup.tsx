@@ -13,7 +13,7 @@ function TagButtonGroup({ tags, handleClick, currentSelected }: ITagGroupProps) 
     <Wrapper>
       {tags.map((tag) => {
         return (
-          tag.archiveTypeID !== 6 && (
+          tag.name !== '기본' && (
             <TagButton
               tagInfo={tag}
               isSelected={currentSelected === tag.archiveTypeID}

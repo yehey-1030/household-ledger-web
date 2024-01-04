@@ -2,6 +2,7 @@ import type { Viewport, Metadata } from 'next';
 import StyledComponentsRegistry from '@/lib/utils/StyledSheetManager';
 import ReactQueryProvider from '@/lib/utils/ReactQueryProvider';
 import { CustomIconDescriptorType } from '@/types/custom';
+import RecoilProvider from '@/lib/utils/RecoilProvider';
 
 interface IRootLayoutProps {
   children: React.ReactNode;
@@ -31,10 +32,14 @@ export default function RootLayout({ children }: IRootLayoutProps) {
   return (
     <html lang="kr">
       <body>
-        <div id="portal" />
-        <StyledComponentsRegistry>
-          <ReactQueryProvider>{children}</ReactQueryProvider>
-        </StyledComponentsRegistry>
+        <RecoilProvider>
+          <StyledComponentsRegistry>
+            <ReactQueryProvider>
+              <div id="portal" />
+              {children}
+            </ReactQueryProvider>
+          </StyledComponentsRegistry>
+        </RecoilProvider>
       </body>
     </html>
   );

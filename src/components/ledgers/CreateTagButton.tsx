@@ -1,5 +1,5 @@
 import { TagType } from '@/types';
-import { Modal, Input, Select, IconButton } from '../common';
+import { Modal, Input, Select, HashTagButton } from '../common';
 import styled from 'styled-components';
 import { useTagCreate } from '@/lib/hooks';
 import { useEffect } from 'react';
@@ -23,13 +23,13 @@ function CreateTagButton({ parentTagList, categoryTypeID }: ICreateTagButton) {
 
   useEffect(() => {
     setArchvieType(categoryTypeID);
-  }, []);
+  }, [categoryTypeID]);
 
   return (
     <>
-      <IconButton iconName="new_label" onClick={openModal} />
+      <HashTagButton label="추가" onClick={openModal} />
       {isModalOpen && (
-        <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit}>
+        <Modal title="태그 추가하기" onClose={closeModal} onComplete={handleSubmit} buttonLabel="추가">
           <Wrapper>
             <Input label="태그 이름" value={tagForm.name} onChange={handleNameChange} isColored />
             <Select

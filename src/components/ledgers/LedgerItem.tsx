@@ -4,17 +4,21 @@ import { amountTostring } from '@/lib/utils/string';
 import { HashTagGroup, P } from '../common';
 import { ArchiveType, TagType } from '@/types';
 import { theme } from '@/styles';
+import DeleteLedgerButton from './DeleteLedgerButton';
+import { getValidKey } from '@/styles/color';
 
 interface ILedgerItemProps {
+  ledgerID: number;
   title: string;
   date: string;
   amount: number;
   tags: TagType[];
   category: ArchiveType;
+  memo: string | null;
 }
 
 export default function LedgerItem(props: ILedgerItemProps) {
-  const { title, date, amount, category, tags } = props;
+  const { title, date, amount, category, tags, memo, ledgerID } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const toShortDate = (target: string) => {
@@ -24,8 +28,8 @@ export default function LedgerItem(props: ILedgerItemProps) {
     return `${month}/${day}`;
   };
   return (
-    <Wrapper categoryID={category.archiveTypeID.toString()} onClick={() => setIsOpen(!isOpen)}>
-      <BasicWrapper>
+    <Wrapper categoryID={category.archiveTypeID.toString()}>
+      <BasicWrapper onClick={() => setIsOpen(!isOpen)}>
         <DTWrapper>
           <Date>{toShortDate(date)}</Date>
           <Title>{title}</Title>
@@ -33,15 +37,19 @@ export default function LedgerItem(props: ILedgerItemProps) {
         <Amount>{amountTostring(amount)}</Amount>
       </BasicWrapper>
       <ExtendWrapper isOpen={isOpen}>
-        <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
+        <Memo>{memo}</Memo>
+        <TagIconWrapper>
+          <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
+          <DeleteLedgerButton ledgerID={ledgerID} />
+        </TagIconWrapper>
       </ExtendWrapper>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div<{ categoryID: string }>`
-  padding: 0.9rem 1.5rem;
-  background-color: ${(props) => theme.color.LEDGER_BACKGROUND[props.categoryID]};
+  padding: 1.2rem 1.5rem;
+  background-color: ${(props) => theme.color.LEDGER_BACKGROUND[getValidKey(props.categoryID)]};
   width: 100%;
   /* height: 4.2rem; */
   display: flex;
@@ -83,10 +91,26 @@ const Amount = styled(P).attrs({
   fontWeight: theme.font.fontWeight.regular,
 })``;
 
+const Memo = styled(P).attrs({
+  fontWeight: theme.font.fontWeight.regular,
+  fontSize: theme.font.fontSize[14],
+  color: theme.color.GREY[100],
+})``;
+
 const ExtendWrapper = styled.div<{ isOpen: boolean }>`
+  padding-top: ${(props) => (props.isOpen ? '1rem' : 0)};
   max-height: ${(props) => (props.isOpen ? 'none' : 0)};
   overflow: hidden;
   @media screen and (min-width: 641px) {
     max-height: none;
   }
+`;
+
+const TagIconWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2rem;
+  column-gap: 1rem;
+  grid-template-areas: 'tags icon';
+
+  align-items: end;
 `;

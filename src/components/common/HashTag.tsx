@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import P from './P';
 import { theme } from '@/styles';
+import { getValidKey } from '@/styles/color';
 
 interface IHashTagProps {
   label: string;
@@ -17,6 +18,6 @@ const StyledTag = styled(P).attrs({
   fontWeight: theme.font.fontWeight.semibold,
   fontSize: theme.font.fontSize[14],
 })<{ archiveType: string }>`
-  color: ${(props) => theme.color.LEDGER_HASHTAG_COLOR[props.archiveType]};
-  margin: 1rem 0.3rem 0rem;
+  color: ${(props) => theme.color.LEDGER_HASHTAG_COLOR[getValidKey(props.archiveType)]};
+  margin: 0rem 0.3rem;
 `;

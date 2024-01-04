@@ -9,6 +9,7 @@ export const useRootTag = (typeID: number) => {
   const { data: selectableTagList } = useQuery({
     queryKey: ['rootTag', typeID],
     queryFn: () => getRootTagList(typeID),
+    staleTime: Infinity,
   });
 
   return { selectableTagList };
@@ -18,6 +19,7 @@ export const useChildTags = (parentID: number) => {
   const { data: childTagList } = useQuery({
     queryKey: ['childTag', parentID],
     queryFn: () => getChildTagList(parentID),
+    staleTime: Infinity,
   });
 
   return { childTagList };
@@ -25,9 +27,11 @@ export const useChildTags = (parentID: number) => {
 
 export const useBasicTags = (typeID: number) => {
   const { data: basicTags } = useQuery({
-    queryKey: ['rootTag', 6],
+    queryKey: ['rootTag', 'basic'],
+    // basic tag id 고정 필요
     queryFn: () => getRootTagList(6),
     enabled: typeID === 3,
+    staleTime: Infinity,
   });
 
   return { basicTags };
@@ -38,7 +42,7 @@ export const useChildTagList = (tagList: number[]) => {
 
   const queryResult = useQueries({
     queries: tagList.map((tag) => {
-      return { queryKey: ['childTag', tag], queryFn: () => getChildTagList(tag) };
+      return { queryKey: ['childTag', tag], queryFn: () => getChildTagList(tag), staleTime: Infinity };
     }),
     combine: (results) => {
       return {
@@ -64,7 +68,7 @@ export const useChildTagList = (tagList: number[]) => {
 
 export const useTagCreate = () => {
   const defaultForm = {
-    archiveTypeID: 0,
+    archiveTypeID: 2,
     name: '',
     parentID: 0,
   };
@@ -94,6 +98,7 @@ export const useTagCreate = () => {
       if (tagForm.parentID) {
         queryClient.invalidateQueries({ queryKey: ['childTag', tagForm.parentID] });
       }
+      queryClient.invalidateQueries({ queryKey: ['rootTag', tagForm.archiveTypeID] });
       closeModal();
     },
     onError: () => {

@@ -1,14 +1,16 @@
 import { theme } from '@/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
-import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate } from '@/lib/hooks';
-import { TagButtonGroup, Select, BottomButton, Input, HashTagButton } from '../common';
+import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate, useIsLoggedIn } from '@/lib/hooks';
+import { TagButtonGroup, Select, BottomButton, Input, HashTagButton, Modal } from '../common';
 import CreateTagButton from './CreateTagButton';
 import { TagType } from '@/types';
 
 function PostLedger() {
+  const { isModalOpen, closeModal } = useIsLoggedIn();
+
   const {
     form,
     handleInputChange,
@@ -22,11 +24,16 @@ function PostLedger() {
   const { selectableTagList } = useRootTag(form.typeID);
   const { basicTags } = useBasicTags(form.typeID);
   const { childTagList } = useChildTagList(form.tagList);
-  const { data } = useQuery({ queryKey: ['categories'], queryFn: () => getCategories() });
+  const { data } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories(),
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
 
   const [currentTagList, setCurrentTagList] = useState<TagType[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (form.tagList.length === 0 && selectableTagList) {
       setCurrentTagList(selectableTagList);
     } else if (selectableTagList) {
@@ -37,6 +44,9 @@ function PostLedger() {
 
   return (
     <Wrapper>
+      {isModalOpen && (
+        <Modal title="로그인이 필요합니다." buttonLabel="확인" onClose={closeModal} onComplete={closeModal} />
+      )}
       {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
       <DateSelectWrapper>
         <DateWrapper>
@@ -96,8 +106,8 @@ function PostLedger() {
               onClick={() => handleHashTagSelect(tag, childTagList)}
             />
           ))}
+        <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       </HashTagWrapper>
-      <CreateTagButton parentTagList={currentTagList} categoryTypeID={form.typeID} />
       <W>
         <ButtonWrapper>
           <BottomButton btnType={checkValid ? 'primary' : 'line'} disabled={!checkValid} onClick={onSubmit}>
@@ -114,7 +124,8 @@ export default React.memo(PostLedger);
 const Wrapper = styled.div`
   background-color: ${theme.color.MAJOR_GREEN[300]};
   border-radius: 4rem 4rem 0 0;
-  filter: drop-shadow(2px -3px 10px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(2px -1px 8px rgba(0, 0, 0, 0.12));
+
   padding: 3.5rem 1.7rem;
   /* height: calc(100% - 6rem); */
   min-height: calc(100vh - 6rem);
@@ -158,4 +169,5 @@ const HashTagWrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
 `;

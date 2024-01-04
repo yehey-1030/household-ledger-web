@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { theme } from '@/styles';
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   type?: 'text' | 'date' | 'number';
   isColored?: boolean;
 }
@@ -11,7 +11,7 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 function Input({ label, type = 'text', placeholder, name, onChange, value, isColored = false }: IInputProps) {
   return (
     <Wrapper>
-      <Label>{label}</Label>
+      {label && <Label>{label}</Label>}
       <StyledInput
         isColored={isColored}
         type={type}
@@ -55,7 +55,7 @@ const StyledInput = styled.input<{ isColored: boolean }>`
   border: none;
   outline: none;
 
-  ::placeholder {
+  &::placeholder {
     color: ${theme.color.GREY[300]};
     font-size: ${theme.font.fontSize[14]};
     font-weight: ${theme.font.fontWeight.regular};
