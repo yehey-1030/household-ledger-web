@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Input, P } from '../common';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { defaultStaticFilterInitialValue, defaultStatisticFilter } from '@/lib/store/statistics';
+import { defaultStaticFilterInitialValue, defaultStatisticFilter } from '@/lib/store';
 import { amountTostring } from '@/lib/utils/string';
 
 interface ITotalInfoBoxProps {
