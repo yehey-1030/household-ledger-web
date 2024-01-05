@@ -1,0 +1,12 @@
+.react-datepicker__month-container {
+  display: flex !important;
+  flex-direction: column !important;
+  float: none !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.5rem !important;
+}
+.react-datepicker__day-names {
+  margin-top: 0.5rem !important;
+}
