@@ -1,10 +1,11 @@
 import { theme } from '@/styles';
 import styled from 'styled-components';
-import { Input, P } from '../common';
-import { useEffect, useState } from 'react';
+import DatePickerButton from '../common/DatePickerButton';
+import { P } from '../common';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { defaultStaticFilterInitialValue, defaultStatisticFilter } from '@/lib/store';
-import { amountTostring } from '@/lib/utils/string';
+import { amountTostring, formatDate } from '@/lib/utils/string';
 
 interface ITotalInfoBoxProps {
   label: string;
@@ -25,10 +26,8 @@ function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
     });
   }, []);
 
-  const customDate = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFilter((prev) => ({ ...prev, [name]: value }));
+  const customDate = (date: Date | null, name: string) => {
+    setFilter((prev) => ({ ...prev, [name]: formatDate(date ?? new Date()) }));
   };
 
   return (
@@ -41,8 +40,8 @@ function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
         <Amount>{amountTostring(totalAmount)}</Amount>
       </Box>
       <ExtendWrapper isOpen={isDatePickerOpen}>
-        <Input type="date" isColored value={filter.start} name="start" onChange={customDate} />
-        <Input type="date" isColored value={filter.end} name="end" onChange={customDate} />
+        <DatePickerButton isColored selected={filter.start} name="start" onChange={customDate} />
+        <DatePickerButton isColored selected={filter.end} name="end" onChange={customDate} />
       </ExtendWrapper>
     </Wrapper>
   );
@@ -101,5 +100,5 @@ const ExtendWrapper = styled.div<{ isOpen: boolean }>`
   max-height: ${(props) => (props.isOpen ? 'none' : 0)};
   margin-top: ${(props) => (props.isOpen ? '1rem' : 0)};
 
-  overflow: hidden;
+  overflow: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
 `;

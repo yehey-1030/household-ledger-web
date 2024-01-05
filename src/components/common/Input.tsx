@@ -4,7 +4,7 @@ import { theme } from '@/styles';
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  type?: 'text' | 'date' | 'number';
+  type?: 'text' | 'number';
   isColored?: boolean;
 }
 
@@ -12,6 +12,7 @@ function Input({ label, type = 'text', placeholder, name, onChange, value, isCol
   return (
     <Wrapper>
       {label && <Label>{label}</Label>}
+
       <StyledInput
         isColored={isColored}
         type={type}

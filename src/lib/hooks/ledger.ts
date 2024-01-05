@@ -4,6 +4,7 @@ import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { deleteLedger, getCurrentMonthLedgers, postLedger } from '../api/ledger';
+import { formatDate } from '../utils/string';
 
 export const useLedgerCreate = () => {
   const defaultForm = {
@@ -56,6 +57,10 @@ export const useLedgerCreate = () => {
     setForm((f) => ({ ...f, tagList: [tagID] }));
   };
 
+  const handleDateSelect = (date: Date, name: string) => {
+    setForm((f) => ({ ...f, [name]: formatDate(date ?? new Date()) }));
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'amount') {
@@ -88,6 +93,7 @@ export const useLedgerCreate = () => {
     handleCategorySelect,
     handleRootTagSelect,
     handleHashTagSelect,
+    handleDateSelect,
     checkValid,
     onSubmit: handleSubmit,
   };

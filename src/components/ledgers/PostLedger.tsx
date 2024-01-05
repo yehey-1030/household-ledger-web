@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
 import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate, useIsLoggedIn } from '@/lib/hooks';
-import { TagButtonGroup, Select, BottomButton, Input, HashTagButton, Modal } from '../common';
+import { TagButtonGroup, Select, BottomButton, Input, HashTagButton, Modal, DatePickerButton } from '../common';
 import CreateTagButton from './CreateTagButton';
 import { TagType } from '@/types';
 
@@ -17,6 +17,7 @@ function PostLedger() {
     handleCategorySelect,
     handleRootTagSelect,
     handleHashTagSelect,
+    handleDateSelect,
     checkValid,
     onSubmit,
   } = useLedgerCreate();
@@ -50,7 +51,7 @@ function PostLedger() {
       {data && <TagButtonGroup tags={data} currentSelected={form.typeID} handleClick={handleCategorySelect} />}
       <DateSelectWrapper>
         <DateWrapper>
-          <Input label="날짜" type="date" name="date" onChange={handleInputChange} value={form.date} />
+          <DatePickerButton label="날짜" name="date" onChange={handleDateSelect} selected={form.date} />
         </DateWrapper>
         <DateWrapper>
           {selectableTagList && selectableTagList?.length !== 0 && (
