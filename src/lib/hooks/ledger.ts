@@ -29,8 +29,8 @@ export const useLedgerCreate = () => {
     onSuccess: () => {
       alert('내역 저장 완료');
       setForm(defaultForm);
-      const date = defaultForm.date.split('-');
-      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], Number(date[1]) - 1] });
+      const date = defaultForm.date.split('-').map(Number);
+      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], date[1] - 1] });
     },
     onError: () => {
       alert('내역 저장 실패');
@@ -129,8 +129,8 @@ export const useLedgerDelete = () => {
   const { mutate } = useMutation({
     mutationFn: (param: number) => deleteLedger(param),
     onSuccess: () => {
-      const yearMonth = date.split('-');
-      queryClient.invalidateQueries({ queryKey: ['ledgers', yearMonth[0], yearMonth[1]] });
+      const yearMonth = date.split('-').map(Number);
+      queryClient.invalidateQueries({ queryKey: ['ledgers', yearMonth[0], yearMonth[1] - 1] });
       closeModal();
     },
     onError: () => {},

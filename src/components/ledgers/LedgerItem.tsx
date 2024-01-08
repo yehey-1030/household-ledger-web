@@ -40,7 +40,7 @@ export default function LedgerItem(props: ILedgerItemProps) {
         <Memo>{memo}</Memo>
         <TagIconWrapper>
           <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
-          <DeleteLedgerButton ledgerID={ledgerID} />
+          <DeleteLedgerButton ledgerID={ledgerID} date={date} />
         </TagIconWrapper>
       </ExtendWrapper>
     </Wrapper>
