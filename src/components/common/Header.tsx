@@ -69,6 +69,8 @@ const Wrapper = styled.header<{ isColored: boolean; hasShadow: boolean }>`
   padding: 0 1.5rem;
 
   box-shadow: ${(props) => (props.hasShadow ? `0px 1px 4px 0px ${theme.color.GREY[300]}` : 'none')};
+
+  z-index: 7;
   /* margin-bottom: 1rem; */
 `;
 
