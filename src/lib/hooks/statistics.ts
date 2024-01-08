@@ -7,7 +7,7 @@ import {
   getTagStatisticByTag,
   getTotalSumByArchiveType,
 } from '../api/statistics';
-import { DefaultStatisticFilter } from '@/types/statistics';
+import { DefaultStatisticFilterType } from '@/types/statistics';
 import { useChildTags } from './tag';
 import { useState } from 'react';
 
@@ -36,7 +36,7 @@ export const useRootTagStatisticList = () => {
 export const useBasicTagStatisticList = () => {
   const filter = useRecoilValue(defaultStatisticFilter);
 
-  const basicFilter: DefaultStatisticFilter = {
+  const basicFilter: DefaultStatisticFilterType = {
     start: filter.start,
     end: filter.end,
     archiveTypeID: 3,

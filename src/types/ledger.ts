@@ -18,3 +18,7 @@ export type LedgerType = {
   archiveType: ArchiveType;
   tagList: TagType[];
 };
+
+export type MonthYearType = {
+  targetMonthYear: Date;
+};
