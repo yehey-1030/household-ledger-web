@@ -3,10 +3,14 @@
 import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { deleteLedger, getCurrentMonthLedgers, postLedger } from '../api/ledger';
+import { deleteLedger, getLedgersByMonth, postLedger } from '../api/ledger';
 import { formatDate } from '../utils/string';
+import { useRecoilValue } from 'recoil';
+import { monthYearFilter } from '../store';
 
 export const useLedgerCreate = () => {
+  const queryClient = useQueryClient();
+
   const defaultForm = {
     title: '',
     amount: 0,
@@ -25,6 +29,8 @@ export const useLedgerCreate = () => {
     onSuccess: () => {
       alert('내역 저장 완료');
       setForm(defaultForm);
+      const date = defaultForm.date.split('-');
+      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], Number(date[1]) - 1] });
     },
     onError: () => {
       alert('내역 저장 실패');
@@ -100,9 +106,15 @@ export const useLedgerCreate = () => {
 };
 
 export const useLedgerList = () => {
+  const selectedMonthYear = useRecoilValue(monthYearFilter);
   const { data: ledgersData } = useSuspenseQuery({
-    queryKey: ['ledgers', 'current'],
-    queryFn: () => getCurrentMonthLedgers(),
+    queryKey: [
+      'ledgers',
+      selectedMonthYear.targetMonthYear.getFullYear(),
+      selectedMonthYear.targetMonthYear.getMonth(),
+    ],
+    queryFn: () => getLedgersByMonth(selectedMonthYear.targetMonthYear),
+    staleTime: 6000 * 100,
   });
 
   return { ledgersData };
@@ -110,13 +122,15 @@ export const useLedgerList = () => {
 
 export const useLedgerDelete = () => {
   const [deleteLedgerID, setDeleteLedgerID] = useState(0);
+  const [date, setDate] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: (param: number) => deleteLedger(param),
     onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ['ledgers', 'current'] });
+      const yearMonth = date.split('-');
+      queryClient.invalidateQueries({ queryKey: ['ledgers', yearMonth[0], yearMonth[1]] });
       closeModal();
     },
     onError: () => {},
@@ -126,8 +140,9 @@ export const useLedgerDelete = () => {
     setModalOpen(false);
   };
 
-  const handleDeleteClicked = (ledgerID: number) => {
+  const handleDeleteClicked = (ledgerID: number, dateString: string) => {
     setDeleteLedgerID(ledgerID);
+    setDate(dateString);
     setModalOpen(true);
   };
 
