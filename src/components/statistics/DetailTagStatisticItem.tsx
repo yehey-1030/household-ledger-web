@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { HashTagButton, Loading, P } from '../common';
 import { amountTostring, setPointToNumber } from '@/lib/utils/string';
 import { useTagStatistic } from '@/lib/hooks';
+import CustomLink from '../common/CustomLink';
 
 interface IDetailTagStatisticItem {
   tagID: number;
@@ -17,14 +18,16 @@ function DetailTagStatisticItem({ tagID, total, parentTagTotal }: IDetailTagStat
   }
 
   return (
-    <Wrapper>
-      <HashTagButton isSelected label={tagStatistic.tagName} />
-      <InfoText>
-        {amountTostring(tagStatistic.totalAmount)} ・{' '}
-        {setPointToNumber((tagStatistic.totalAmount / parentTagTotal) * 100)} ・{' '}
-        {setPointToNumber((tagStatistic.totalAmount / total) * 100)}
-      </InfoText>
-    </Wrapper>
+    <CustomLink href={`/statistics/${tagID}`}>
+      <Wrapper>
+        <HashTagButton isSelected label={tagStatistic.tagName} />
+        <InfoText>
+          {amountTostring(tagStatistic.totalAmount)} ・{' '}
+          {setPointToNumber((tagStatistic.totalAmount / parentTagTotal) * 100)} ・{' '}
+          {setPointToNumber((tagStatistic.totalAmount / total) * 100)}
+        </InfoText>
+      </Wrapper>
+    </CustomLink>
   );
 }
 export default DetailTagStatisticItem;
