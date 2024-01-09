@@ -53,8 +53,9 @@ const Wrapper = styled.div<{ isLeft: boolean }>`
       ? `
     min-height:100%; 
     height:100%;
-    width: 22rem;
-
+    width: 65%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
     `
       : `
       width:100%;
