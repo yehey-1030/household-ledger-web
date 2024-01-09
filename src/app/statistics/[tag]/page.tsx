@@ -1,12 +1,12 @@
 import { Layout, Loading } from '@/components/common';
-import { DetailLedgers } from '@/components/statistics';
+import { DetailLedgerList } from '@/components/statistics';
 import { Suspense } from 'react';
 
 function DetailStatisticPage({ params }: { params: { tag: number } }) {
   return (
     <Layout>
       <Suspense fallback={<Loading />}>
-        <DetailLedgers tagID={params.tag} />
+        <DetailLedgerList tagID={params.tag} />
       </Suspense>
     </Layout>
   );
