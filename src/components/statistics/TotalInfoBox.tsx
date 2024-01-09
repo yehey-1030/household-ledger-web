@@ -4,7 +4,7 @@ import DatePickerButton from '../common/DatePickerButton';
 import { P } from '../common';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { defaultStaticFilterInitialValue, defaultStatisticFilter } from '@/lib/store';
+import { defaultStatisticFilter } from '@/lib/store';
 import { amountTostring, formatDate } from '@/lib/utils/string';
 
 interface ITotalInfoBoxProps {
@@ -20,8 +20,8 @@ function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
 
   useEffect(() => {
     setFilter({
-      start: defaultStaticFilterInitialValue.start,
-      end: defaultStaticFilterInitialValue.end,
+      start: filter.start,
+      end: filter.end,
       archiveTypeID: typeID,
     });
   }, []);
