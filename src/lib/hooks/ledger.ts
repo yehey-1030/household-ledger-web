@@ -1,9 +1,9 @@
 'use client';
 
 import { LedgerCreateParams, TagType } from '@/types';
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { deleteLedger, getLedgersByMonth, postLedger } from '../api/ledger';
+import { deleteLedger, getLedgerByID, getLedgersByMonth, postLedger } from '../api/ledger';
 import { formatDate } from '../utils/string';
 import { useRecoilValue } from 'recoil';
 import { monthYearFilter } from '../store';
@@ -157,4 +157,18 @@ export const useLedgerDelete = () => {
   };
 
   return { isModalOpen, closeModal, handleDeleteClicked, handleSubmit };
+};
+
+export const useLedgerIDList = (ledgerIDList: number[]) => {
+  const result = useSuspenseQueries({
+    queries: ledgerIDList.map((ledgerID) => {
+      return {
+        queryKey: ['ledger', ledgerID],
+        queryFn: () => getLedgerByID(ledgerID),
+        staleTime: Infinity,
+      };
+    }),
+  });
+
+  return { result };
 };

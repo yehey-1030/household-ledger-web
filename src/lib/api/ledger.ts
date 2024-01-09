@@ -18,3 +18,7 @@ export const getLedgersByMonth = (date: Date): Promise<LedgerType[]> => {
   const params = { start: formatDate(getFirstDay(date)), end: formatDate(getLastDay(date)) };
   return apiClient.get(`/ledgers`, { params }).then((res) => res.data.data);
 };
+
+export const getLedgerByID = (ledgerID: number): Promise<LedgerType> => {
+  return apiClient.get(`/ledgers/${ledgerID}`).then((res) => res.data.data);
+};
