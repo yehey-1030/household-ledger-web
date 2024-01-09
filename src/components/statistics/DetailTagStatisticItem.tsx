@@ -18,7 +18,7 @@ function DetailTagStatisticItem({ tagID, total, parentTagTotal }: IDetailTagStat
   }
 
   return (
-    <CustomLink href={`/statistics/${tagID}`}>
+    <CustomLink href={`/statistics/detail/${tagID}`}>
       <Wrapper>
         <HashTagButton isSelected label={tagStatistic.tagName} />
         <InfoText>
