@@ -4,6 +4,7 @@ import P from './P';
 import IconButton from './IconButton';
 import { theme } from '@/styles';
 import CustomLink from './CustomLink';
+import { useRouter } from 'next/navigation';
 
 interface IHeaderProps {
   title: string;
@@ -20,16 +21,16 @@ export default function Header({
   isColored = false,
   hasShadow = false,
 }: IHeaderProps) {
+  const router = useRouter();
   return (
     <Wrapper isColored={isColored} hasShadow={hasShadow}>
       {goback ? (
-        <CustomLink href="/">
-          <IconButton
-            iconName="arrow_back_ios"
-            size="2.4rem"
-            color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
-          />
-        </CustomLink>
+        <IconButton
+          onClick={() => router.back()}
+          iconName="arrow_back_ios"
+          size="2.4rem"
+          color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
+        />
       ) : (
         <CustomLink href="/statistics">
           <IconButton
