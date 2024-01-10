@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import P from './P';
 import IconButton from './IconButton';
 import { theme } from '@/styles';
 import CustomLink from './CustomLink';
 import { useRouter } from 'next/navigation';
+import MenuDrawer from './MenuDrawer';
 
 interface IHeaderProps {
   title: string;
@@ -22,6 +23,8 @@ export default function Header({
   hasShadow = false,
 }: IHeaderProps) {
   const router = useRouter();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <Wrapper isColored={isColored} hasShadow={hasShadow}>
       {goback ? (
@@ -32,13 +35,15 @@ export default function Header({
           color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
         />
       ) : (
-        <CustomLink href="/statistics">
+        <>
           <IconButton
             iconName="bar_chart"
             size="2.4rem"
             color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
+            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
           />
-        </CustomLink>
+          {isDrawerOpen && <MenuDrawer onClose={() => setIsDrawerOpen(false)} />}
+        </>
       )}
       <Title isColored={isColored}>{title}</Title>
 
