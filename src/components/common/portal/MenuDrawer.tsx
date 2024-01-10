@@ -3,8 +3,8 @@ import { useRouter } from 'next/navigation';
 import { menuList } from '@/assets/constants/menu';
 import { theme } from '@/styles';
 import Drawer from './Drawer';
-import Icon from './Icon';
-import P from './P';
+import Icon from '../Icon';
+import P from '../P';
 
 interface IMenuDrawerProps {
   onClose: () => void;

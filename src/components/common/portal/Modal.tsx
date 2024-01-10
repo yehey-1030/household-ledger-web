@@ -1,7 +1,7 @@
 import { theme } from '@/styles';
 import styled from 'styled-components';
-import P from './P';
-import BottomButton from './BottomButton';
+import P from '../P';
+import BottomButton from '../BottomButton';
 import Portal from '@/lib/utils/Portal';
 
 interface IModalProps {

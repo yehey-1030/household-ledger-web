@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import P from './P';
-import IconButton from './IconButton';
+import P from '../P';
+import IconButton from '../IconButton';
 import { theme } from '@/styles';
-import CustomLink from './CustomLink';
+import CustomLink from '../CustomLink';
 import { useRouter } from 'next/navigation';
-import MenuDrawer from './MenuDrawer';
+import MenuDrawer from '../portal/MenuDrawer';
 
 interface IHeaderProps {
   title: string;
