@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { defaultStatisticFilter } from '@/lib/store';
 import { amountTostring, formatDate } from '@/lib/utils/string';
+import { getValidKey } from '@/styles/color';
 
 interface ITotalInfoBoxProps {
   label: string;
@@ -32,7 +33,7 @@ function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
 
   return (
     <Wrapper>
-      <Box onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}>
+      <Box onClick={() => setIsDatePickerOpen(!isDatePickerOpen)} categoryID={typeID.toString()}>
         <DateText>
           {filter.start} ~ {filter.end}
         </DateText>
@@ -40,8 +41,18 @@ function TotalInfoBox({ label, typeID, totalAmount }: ITotalInfoBoxProps) {
         <Amount>{amountTostring(totalAmount)}</Amount>
       </Box>
       <ExtendWrapper isOpen={isDatePickerOpen}>
-        <DatePickerButton isColored selected={filter.start} name="start" onChange={customDate} />
-        <DatePickerButton isColored selected={filter.end} name="end" onChange={customDate} />
+        <DatePickerButton
+          color={theme.color.LEDGER_BACKGROUND[getValidKey(typeID.toString())]}
+          selected={filter.start}
+          name="start"
+          onChange={customDate}
+        />
+        <DatePickerButton
+          color={theme.color.LEDGER_BACKGROUND[getValidKey(typeID.toString())]}
+          selected={filter.end}
+          name="end"
+          onChange={customDate}
+        />
       </ExtendWrapper>
     </Wrapper>
   );
@@ -53,11 +64,11 @@ const Wrapper = styled.div`
   width: 100%;
   margin: 1.5rem 0 2.5rem;
 `;
-const Box = styled.div`
+const Box = styled.div<{ categoryID: string }>`
   width: 100%;
-  background-color: ${theme.color.MAJOR_GREEN[200]};
-  border-radius: 1.5rem;
+  background-color: ${({ categoryID }) => theme.color.LEDGER_HASHTAG_COLOR[getValidKey(categoryID)]};
   padding: 0.8rem 1.8rem 1.5rem 1.8rem;
+  border-radius: 1.5rem;
 
   display: grid;
   grid-template:

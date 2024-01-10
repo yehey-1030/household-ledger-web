@@ -35,7 +35,7 @@ function Statistic({ typeID }: IStatisticProps) {
           <TotalInfoBox label="총 지출" typeID={typeID} totalAmount={totalAmount.totalAmount} />
 
           <TagStatisticList
-            title={`지출 순위${typeID}`}
+            title="지출 순위"
             statisticList={rootTagStatisticList}
             totalAmount={totalAmount.totalAmount}
           />
