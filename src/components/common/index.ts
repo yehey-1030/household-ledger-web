@@ -18,3 +18,4 @@ export { default as Divider } from './Divider';
 export { default as Loading } from './Loading';
 export { default as Drawer } from './portal/Drawer';
 export { default as DatePickerButton } from './DatePickerButton';
+export { default as HomeHeader } from './header/HomeHeader';
