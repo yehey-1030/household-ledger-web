@@ -7,7 +7,7 @@ import '@/styles/calendar.css';
 import { useState } from 'react';
 
 interface IDatePickerButtonProps {
-  color: string;
+  color?: string;
   onChange: (date: Date, name: string) => void;
   label?: string;
   name: string;
