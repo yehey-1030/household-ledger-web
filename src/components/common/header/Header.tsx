@@ -16,7 +16,7 @@ interface IHeaderProps {
   hasDrawer?: boolean;
 }
 
-export default function Header({ title, goback = true, hasShadow = false, hasDrawer = true }: IHeaderProps) {
+export default function Header({ title, goback = true, hasShadow = false, hasDrawer = false }: IHeaderProps) {
   const router = useRouter();
   const [color, setColor] = useState(theme.color.MAJOR_GREEN[100]);
   const currentPath = usePathname();
