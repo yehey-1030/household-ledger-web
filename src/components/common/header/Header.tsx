@@ -1,75 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import P from '../P';
-import IconButton from '../IconButton';
 import { theme } from '@/styles';
-import CustomLink from '../CustomLink';
-import { useRouter } from 'next/navigation';
-import MenuDrawer from '../portal/MenuDrawer';
+import { usePathname, useRouter } from 'next/navigation';
+
+import HeaderIconButton from './HeaderIconButton';
+import DrawerIconButton from './DrawerIconButton';
+import { useRecoilValue } from 'recoil';
+import { currentArchiveTypeColor } from '@/lib/store';
 
 interface IHeaderProps {
   title: string;
   goback?: boolean;
-  canCreate?: boolean;
-  isColored?: boolean;
   hasShadow?: boolean;
+  hasDrawer?: boolean;
 }
 
-export default function Header({
-  title,
-  goback = true,
-  canCreate = false,
-  isColored = false,
-  hasShadow = false,
-}: IHeaderProps) {
+export default function Header({ title, goback = true, hasShadow = false, hasDrawer = true }: IHeaderProps) {
   const router = useRouter();
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [color, setColor] = useState(theme.color.MAJOR_GREEN[100]);
+  const currentPath = usePathname();
+  const archiveTypeColor = useRecoilValue(currentArchiveTypeColor);
+
+  useEffect(() => {
+    if (currentPath.includes('statistics')) {
+      setColor(theme.color.LEDGER_HASHTAG_COLOR[archiveTypeColor]);
+    }
+  }, [archiveTypeColor]);
 
   return (
-    <Wrapper isColored={isColored} hasShadow={hasShadow}>
-      {goback ? (
-        <IconButton
-          onClick={() => router.back()}
-          iconName="arrow_back_ios"
-          size="2.4rem"
-          color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
-        />
-      ) : (
-        <>
-          <IconButton
-            iconName="bar_chart"
-            size="2.4rem"
-            color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
-            onClick={() => setIsDrawerOpen(!isDrawerOpen)}
-          />
-          {isDrawerOpen && <MenuDrawer onClose={() => setIsDrawerOpen(false)} />}
-        </>
-      )}
-      <Title isColored={isColored}>{title}</Title>
+    <Wrapper hasShadow={hasShadow}>
+      {goback ? <HeaderIconButton iconName="arrow_back_ios" color={color} onClick={() => router.back()} /> : <Empty />}
+      <Title color={color}>{title}</Title>
 
-      {canCreate ? (
-        <CustomLink href="/ledger">
-          <IconButton
-            iconName="add"
-            size="2.4rem"
-            color={isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100]}
-          />
-        </CustomLink>
-      ) : (
-        <Empty />
-      )}
+      {hasDrawer ? <DrawerIconButton color={color} /> : <Empty />}
     </Wrapper>
   );
 }
 
-const Wrapper = styled.header<{ isColored: boolean; hasShadow: boolean }>`
+const Wrapper = styled.header<{ hasShadow: boolean }>`
   width: 100%;
   height: 6rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: ${(props) => (props.isColored ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
+  background-color: ${theme.color.WHITE};
   position: sticky;
   top: 0;
   padding: 0 1.5rem;
@@ -83,8 +59,8 @@ const Wrapper = styled.header<{ isColored: boolean; hasShadow: boolean }>`
 const Title = styled(P).attrs({
   fontSize: theme.font.fontSize[24],
   fontWeight: theme.font.fontWeight.bold,
-})<{ isColored: boolean }>`
-  color: ${(props) => (props.isColored ? theme.color.MAJOR_GREEN[200] : theme.color.MAJOR_GREEN[100])};
+})<{ color: string }>`
+  color: ${(props) => props.color};
 `;
 
 const Empty = styled.div`

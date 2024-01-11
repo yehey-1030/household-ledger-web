@@ -7,7 +7,7 @@ interface IStatisticsLayoutProps {
 export default function StatisticsLayout({ children }: IStatisticsLayoutProps) {
   return (
     <Layout>
-      <Header title="통계" />
+      <Header title="통계" hasDrawer />
       {children}
     </Layout>
   );
