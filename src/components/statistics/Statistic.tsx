@@ -1,3 +1,4 @@
+import { archiveTypeValue } from '@/assets/constants/archiveType';
 import { Layout, Loading, Modal } from '@/components/common';
 import { TagStatisticList, TotalInfoBox } from '@/components/statistics';
 import { useBasicTagStatisticList, useRootTagStatisticList, useTotalSum } from '@/lib/hooks';
@@ -32,10 +33,14 @@ function Statistic({ typeID }: IStatisticProps) {
       {isLoggedIn && isLoading && <Loading />}
       {isLoggedIn && (
         <>
-          <TotalInfoBox label="총 지출" typeID={typeID} totalAmount={totalAmount.totalAmount} />
+          <TotalInfoBox
+            label={`총 ${archiveTypeValue[typeID]}`}
+            typeID={typeID}
+            totalAmount={totalAmount.totalAmount}
+          />
 
           <TagStatisticList
-            title="지출 순위"
+            title={`${archiveTypeValue[typeID]} 순위`}
             statisticList={rootTagStatisticList}
             totalAmount={totalAmount.totalAmount}
           />
