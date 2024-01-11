@@ -7,14 +7,14 @@ import '@/styles/calendar.css';
 import { useState } from 'react';
 
 interface IDatePickerButtonProps {
-  isColored?: boolean;
+  color: string;
   onChange: (date: Date, name: string) => void;
   label?: string;
   name: string;
   selected: string;
 }
 
-function DatePickerButton({ label, name, onChange, selected, isColored = false }: IDatePickerButtonProps) {
+function DatePickerButton({ label, name, onChange, selected, color = theme.color.WHITE }: IDatePickerButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (date: Date) => {
@@ -29,7 +29,7 @@ function DatePickerButton({ label, name, onChange, selected, isColored = false }
   return (
     <Wrapper>
       {label && <Label>{label}</Label>}
-      <StyledButton isColored={isColored} onClick={handleClick}>
+      <StyledButton color={color} onClick={handleClick}>
         {selected}
       </StyledButton>
       {isOpen && (
@@ -58,7 +58,7 @@ const Label = styled.label`
   width: 100%;
 `;
 
-const StyledButton = styled.button<{ isColored: boolean }>`
+const StyledButton = styled.button<{ color: string }>`
   padding: 1.2rem;
   width: 100%;
   height: 4rem;
@@ -68,7 +68,7 @@ const StyledButton = styled.button<{ isColored: boolean }>`
   font-size: ${theme.font.fontSize[14]};
   font-weight: ${theme.font.fontWeight.regular};
   color: ${theme.color.GREY[200]};
-  background-color: ${(props) => (props.isColored ? theme.color.MAJOR_GREEN[300] : theme.color.WHITE)};
+  background-color: ${(props) => props.color};
 
   border: none;
   outline: none;

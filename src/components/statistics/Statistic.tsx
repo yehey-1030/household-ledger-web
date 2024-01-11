@@ -1,3 +1,4 @@
+import { archiveTypeValue } from '@/assets/constants/archiveType';
 import { Layout, Loading, Modal } from '@/components/common';
 import { TagStatisticList, TotalInfoBox } from '@/components/statistics';
 import { useBasicTagStatisticList, useRootTagStatisticList, useTotalSum } from '@/lib/hooks';
@@ -6,7 +7,11 @@ import { defaultStatisticFilter } from '@/lib/store';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-function Statistic() {
+interface IStatisticProps {
+  typeID: number;
+}
+
+function Statistic({ typeID }: IStatisticProps) {
   const { totalAmount } = useTotalSum();
   const { statisticList: rootTagStatisticList } = useRootTagStatisticList();
   const { basicStatisticList } = useBasicTagStatisticList();
@@ -28,19 +33,25 @@ function Statistic() {
       {isLoggedIn && isLoading && <Loading />}
       {isLoggedIn && (
         <>
-          <TotalInfoBox label="총 지출" typeID={3} totalAmount={totalAmount.totalAmount} />
+          <TotalInfoBox
+            label={`총 ${archiveTypeValue[typeID]}`}
+            typeID={typeID}
+            totalAmount={totalAmount.totalAmount}
+          />
 
           <TagStatisticList
-            title="지출 순위"
+            title={`${archiveTypeValue[typeID]} 순위`}
             statisticList={rootTagStatisticList}
             totalAmount={totalAmount.totalAmount}
           />
-          <TagStatisticList
-            title="기본태그 통계"
-            statisticList={basicStatisticList}
-            totalAmount={totalAmount.totalAmount}
-          />
         </>
+      )}
+      {String(typeID) === '3' && (
+        <TagStatisticList
+          title="기본태그 통계"
+          statisticList={basicStatisticList}
+          totalAmount={totalAmount.totalAmount}
+        />
       )}
     </Layout>
   );

@@ -6,12 +6,20 @@ import { theme } from '@/styles';
 interface IHashTagButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   isSelected?: boolean;
+  color?: string;
 }
 
-function HashTagButton({ label, isSelected = true, onClick }: IHashTagButtonProps) {
+function HashTagButton({
+  label,
+  isSelected = true,
+  onClick,
+  color = theme.color.LEDGER_HASHTAG_COLOR.green,
+}: IHashTagButtonProps) {
   return (
     <Wrapper onClick={onClick}>
-      <Name isSelected={isSelected}>#{label}</Name>
+      <Name isSelected={isSelected} color={color}>
+        #{label}
+      </Name>
     </Wrapper>
   );
 }
@@ -30,5 +38,5 @@ const Wrapper = styled.button`
 const Name = styled(P).attrs({
   fontWeight: theme.font.fontWeight.semibold,
 })<{ isSelected: boolean }>`
-  color: ${(props) => (props.isSelected ? theme.color.MAJOR_GREEN[200] : theme.color.GREY[100])};
+  color: ${(props) => (props.isSelected ? props.color : theme.color.GREY[100])};
 `;

@@ -1,4 +1,4 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { defaultStatisticFilter } from '../store';
 import {
@@ -53,10 +53,11 @@ export const useBasicTagStatisticList = () => {
 export const useTagStatistic = (tagID: number) => {
   const filter = useRecoilValue(defaultStatisticFilter);
 
-  const { data: tagStatistic } = useQuery({
+  const { data: tagStatistic } = useSuspenseQuery({
     queryKey: ['statistic', filter.start, filter.end, tagID],
     queryFn: () =>
       getTagStatisticByTag({ tagID, start: filter.start, end: filter.end, archiveTypeID: filter.archiveTypeID }),
+    staleTime: 6000 * 100,
   });
 
   return { tagStatistic };

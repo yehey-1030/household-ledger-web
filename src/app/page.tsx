@@ -1,4 +1,5 @@
-import { Layout, Loading, Header } from '@/components/common';
+import { Layout, Loading } from '@/components/common';
+import HomeHeader from '@/components/common/header/HomeHeader';
 import { LedgerList } from '@/components/home';
 
 import React, { Suspense } from 'react';
@@ -6,7 +7,7 @@ import React, { Suspense } from 'react';
 export default function Home() {
   return (
     <Layout>
-      <Header title="HOME" goback={false} canCreate />
+      <HomeHeader />
 
       <Layout>
         <Suspense fallback={<Loading />}>

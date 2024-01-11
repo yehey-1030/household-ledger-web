@@ -2,14 +2,16 @@ import styled from 'styled-components';
 import { useSelectDetailTagStatistic } from '@/lib/hooks';
 import { HashTagButton } from '../common';
 import DetailTagStatisticItem from './DetailTagStatisticItem';
+import { theme } from '@/styles';
 
 interface IDetailTagStatisticList {
   total: number;
   parentTagTotal: number;
   currentTag: number;
+  color?: string;
 }
 
-function DetailTagStatisticList({ total, parentTagTotal, currentTag }: IDetailTagStatisticList) {
+function DetailTagStatisticList({ total, parentTagTotal, currentTag, color = 'green' }: IDetailTagStatisticList) {
   const { childTagList, selectedList, isSelected, handleHashTagClicked } = useSelectDetailTagStatistic(currentTag);
   return (
     <Wrapper>
@@ -20,12 +22,13 @@ function DetailTagStatisticList({ total, parentTagTotal, currentTag }: IDetailTa
             label={tag.name}
             isSelected={isSelected(tag.tagID)}
             onClick={() => handleHashTagClicked(tag.tagID)}
+            color={theme.color.LEDGER_HASHTAG_COLOR[color]}
           />
         ))}
       </TagWrapper>
       <DetailWrapper>
         {selectedList?.map((tagID) => (
-          <DetailTagStatisticItem tagID={tagID} total={total} parentTagTotal={parentTagTotal} />
+          <DetailTagStatisticItem tagID={tagID} total={total} color={color} parentTagTotal={parentTagTotal} />
         ))}
       </DetailWrapper>
     </Wrapper>

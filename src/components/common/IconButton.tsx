@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import Icon from './Icon';
 
-interface IIconButtonProps {
+interface IIconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconName: string;
   size?: string;
   color?: string;
-  onClick?: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 function IconButton({ iconName, size, color, onClick }: IIconButtonProps) {
