@@ -5,18 +5,18 @@ import styled from 'styled-components';
 
 interface IDrawerProps {
   children: ReactNode;
-  location?: 'left' | 'bottom';
+  location?: 'left' | 'bottom' | 'right';
   onClose: () => void;
 }
 
-function Drawer({ children, location = 'left', onClose }: IDrawerProps) {
+function Drawer({ children, location = 'right', onClose }: IDrawerProps) {
   const handleWrapperClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
   };
   return (
     <Portal>
-      <Background isLeft={location === 'left'} onClick={onClose}>
-        <Wrapper isLeft={location === 'left'} onClick={handleWrapperClick}>
+      <Background isRight={location === 'right'} onClick={onClose}>
+        <Wrapper isRight={location === 'right'} onClick={handleWrapperClick}>
           {children}
         </Wrapper>
       </Background>
@@ -26,10 +26,10 @@ function Drawer({ children, location = 'left', onClose }: IDrawerProps) {
 
 export default Drawer;
 
-const Background = styled.div<{ isLeft: boolean }>`
+const Background = styled.div<{ isRight: boolean }>`
   display: flex;
-  justify-content: ${({ isLeft }) => (isLeft ? 'flex-start' : 'center')};
-  align-items: ${({ isLeft }) => (isLeft ? 'center' : 'flex-end')};
+  justify-content: ${({ isRight }) => (isRight ? 'flex-end' : 'center')};
+  align-items: ${({ isRight }) => (isRight ? 'center' : 'flex-end')};
 
   position: fixed;
   top: 0;
@@ -42,20 +42,20 @@ const Background = styled.div<{ isLeft: boolean }>`
   backdrop-filter: blur(4px);
 `;
 
-const Wrapper = styled.div<{ isLeft: boolean }>`
+const Wrapper = styled.div<{ isRight: boolean }>`
   display: flex;
   flex-direction: column;
   background: ${theme.color.WHITE};
   padding: 2rem;
 
-  ${({ isLeft }) =>
-    isLeft
+  ${({ isRight }) =>
+    isRight
       ? `
     min-height:100%; 
     height:100%;
     width: 65%;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     `
       : `
       width:100%;

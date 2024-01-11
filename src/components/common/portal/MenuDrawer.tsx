@@ -17,6 +17,7 @@ function MenuDrawer({ onClose }: IMenuDrawerProps) {
       {menuList.map((menu) => (
         <MenuItem
           onClick={() => {
+            onClose();
             router.push(menu.route);
           }}
         >
