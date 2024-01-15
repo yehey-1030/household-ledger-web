@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   title: '언니의 가계부',
   icons: {
     other: icon,
+    icon: '/icon.svg',
   },
 };
 
