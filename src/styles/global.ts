@@ -13,10 +13,18 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: 'Noto Sans KR', sans-serif;
   }
-/* 
-  p {
-    line-height: 1.5;
+  /* 
+  input[type="date"]{
+    appearance:none ;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   } */
+  input[type="checkbox"]{
+    appearance:none ;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  } 
+
 
   @media (max-width:319px)  {
     /* smartphones, iPhone, portrait 480x320 phones */
