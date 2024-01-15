@@ -11,13 +11,14 @@ import { monthYearFilter } from '../store';
 export const useLedgerCreate = () => {
   const queryClient = useQueryClient();
 
-  const defaultForm = {
+  const defaultForm: LedgerCreateParams = {
     title: '',
     amount: 0,
     date: '',
     tagList: [],
     typeID: 2,
     memo: '',
+    isExcluded: false,
   };
 
   const [form, setForm] = useState<LedgerCreateParams>(defaultForm);
@@ -86,6 +87,11 @@ export const useLedgerCreate = () => {
     }
   };
 
+  const handleCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setForm((f) => ({ ...f, [name]: checked }));
+  };
+
   const handleSubmit = () => {
     if (checkValid) {
       mutate(form);
@@ -100,6 +106,7 @@ export const useLedgerCreate = () => {
     handleRootTagSelect,
     handleHashTagSelect,
     handleDateSelect,
+    handleCheckBox,
     checkValid,
     onSubmit: handleSubmit,
   };

@@ -4,7 +4,16 @@ import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/lib/api/category';
 import { useBasicTags, useChildTagList, useRootTag, useLedgerCreate, useIsLoggedIn } from '@/lib/hooks';
-import { TagButtonGroup, Select, BottomButton, Input, HashTagButton, Modal, DatePickerButton } from '../common';
+import {
+  TagButtonGroup,
+  Select,
+  BottomButton,
+  Input,
+  HashTagButton,
+  Modal,
+  DatePickerButton,
+  CheckBox,
+} from '../common';
 import CreateTagButton from './CreateTagButton';
 import { TagType } from '@/types';
 
@@ -18,6 +27,7 @@ function PostLedger() {
     handleRootTagSelect,
     handleHashTagSelect,
     handleDateSelect,
+    handleCheckBox,
     checkValid,
     onSubmit,
   } = useLedgerCreate();
@@ -87,7 +97,7 @@ function PostLedger() {
         onChange={handleInputChange}
         value={form.memo}
       />
-
+      <CheckBox label="통계 제외" name="isExcluded" onChange={handleCheckBox} checked={form.isExcluded} />
       <HashTagWrapper>
         {form.typeID === 3 &&
           basicTags?.map((tag) => (
