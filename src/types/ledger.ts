@@ -7,6 +7,7 @@ export type LedgerCreateParams = {
   date: string;
   tagList: number[];
   memo?: string;
+  isExcluded: boolean;
 };
 
 export type LedgerType = {
@@ -16,6 +17,7 @@ export type LedgerType = {
   amount: number;
   memo: string | null;
   archiveType: ArchiveType;
+  isExcluded: boolean;
   tagList: TagType[];
 };
 
