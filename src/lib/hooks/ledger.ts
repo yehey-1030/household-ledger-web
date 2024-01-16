@@ -3,56 +3,31 @@
 import { LedgerCreateParams, TagType } from '@/types';
 import { useMutation, useQueryClient, useSuspenseQueries, useSuspenseQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
-import { deleteLedger, getLedgerByID, getLedgersByMonth, postLedger } from '../api/ledger';
+import { deleteLedger, getLedgerByID, getLedgersByMonth, postLedger, putLedger } from '../api/ledger';
 import { formatDate } from '../utils/string';
-import { useRecoilValue } from 'recoil';
-import { monthYearFilter } from '../store';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { defaultForm, ledgerForm, monthYearFilter } from '../store';
+import { useRouter } from 'next/navigation';
 
-export const useLedgerCreate = () => {
-  const queryClient = useQueryClient();
-
-  const defaultForm: LedgerCreateParams = {
-    title: '',
-    amount: 0,
-    date: '',
-    tagList: [],
-    typeID: 2,
-    memo: '',
-    isExcluded: false,
-  };
-
-  const [form, setForm] = useState<LedgerCreateParams>(defaultForm);
-
-  const [checkValid, setCheckValid] = useState(false);
-
-  const { mutate } = useMutation({
-    mutationFn: (data: LedgerCreateParams) => postLedger(data),
-    onSuccess: () => {
-      alert('내역 저장 완료');
-      setForm(defaultForm);
-      const date = defaultForm.date.split('-').map(Number);
-      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], date[1] - 1] });
-    },
-    onError: () => {
-      alert('내역 저장 실패');
-    },
-  });
+export const useLedgerForm = () => {
+  const [form, setForm] = useRecoilState(ledgerForm);
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
     checkFormValid();
   }, [form]);
 
   const checkFormValid = () => {
-    setCheckValid(true);
+    setIsValid(true);
 
     if (form.title === '') {
-      setCheckValid(false);
+      setIsValid(false);
     } else if (form.amount === 0 || Number.isNaN(form.amount)) {
-      setCheckValid(false);
+      setIsValid(false);
     } else if (form.date === '') {
-      setCheckValid(false);
+      setIsValid(false);
     } else if (form.tagList.length === 0) {
-      setCheckValid(false);
+      setIsValid(false);
     }
   };
 
@@ -92,23 +67,87 @@ export const useLedgerCreate = () => {
     setForm((f) => ({ ...f, [name]: checked }));
   };
 
-  const handleSubmit = () => {
-    if (checkValid) {
-      mutate(form);
-      setForm(defaultForm);
-    }
-  };
-
   return {
-    form,
     handleInputChange,
     handleCategorySelect,
     handleRootTagSelect,
     handleHashTagSelect,
     handleDateSelect,
     handleCheckBox,
-    checkValid,
-    onSubmit: handleSubmit,
+    isValid,
+  };
+};
+
+export const useLedgerCreate = () => {
+  const queryClient = useQueryClient();
+
+  const [form, setForm] = useRecoilState(ledgerForm);
+
+  useEffect(() => {
+    setForm(defaultForm);
+  }, []);
+
+  const { mutate } = useMutation({
+    mutationFn: (data: LedgerCreateParams) => postLedger(data),
+    onSuccess: () => {
+      alert('내역 저장 완료');
+      const date = form.date.split('-').map(Number);
+      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], date[1] - 1] });
+      setForm(defaultForm);
+    },
+    onError: () => {
+      alert('내역 저장 실패');
+    },
+  });
+
+  const createLedger = () => {
+    mutate(form);
+  };
+
+  return {
+    createLedger,
+  };
+};
+
+export const useLedgerUpdate = (ledgerID: number) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const [form, setForm] = useRecoilState(ledgerForm);
+  const { ledgerInfo } = useLedgerInfo(ledgerID);
+
+  useEffect(() => {
+    setForm({
+      title: ledgerInfo.title,
+      typeID: ledgerInfo.archiveType.archiveTypeID,
+      amount: ledgerInfo.amount,
+      date: ledgerInfo.date,
+      tagList: ledgerInfo.tagList.map((tag) => tag.tagID),
+      isExcluded: ledgerInfo.isExcluded,
+    });
+  }, []);
+
+  const { mutate } = useMutation({
+    mutationFn: (data: LedgerCreateParams) => putLedger(data, ledgerID),
+    onSuccess: () => {
+      alert('내역 수정 완료');
+      const date = form.date.split('-').map(Number);
+      queryClient.invalidateQueries({ queryKey: ['ledgers', date[0], date[1] - 1] });
+      queryClient.invalidateQueries({ queryKey: ['ledger', ledgerID] });
+      setForm(defaultForm);
+      router.back();
+    },
+    onError: () => {
+      alert('내역 수정 실패');
+    },
+  });
+
+  const updateLedger = () => {
+    mutate(form);
+  };
+
+  return {
+    updateLedger,
   };
 };
 
@@ -138,6 +177,8 @@ export const useLedgerDelete = () => {
     onSuccess: () => {
       const yearMonth = date.split('-').map(Number);
       queryClient.invalidateQueries({ queryKey: ['ledgers', yearMonth[0], yearMonth[1] - 1] });
+      queryClient.invalidateQueries({ queryKey: ['ledger', deleteLedgerID] });
+
       closeModal();
     },
     onError: () => {},
@@ -178,4 +219,13 @@ export const useLedgerIDList = (ledgerIDList: number[]) => {
   });
 
   return { result };
+};
+
+export const useLedgerInfo = (ledgerID: number) => {
+  const { data: ledgerInfo } = useSuspenseQuery({
+    queryKey: ['ledger', ledgerID],
+    queryFn: () => getLedgerByID(ledgerID),
+  });
+
+  return { ledgerInfo };
 };
