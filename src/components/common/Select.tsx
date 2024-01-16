@@ -1,5 +1,5 @@
 import { theme } from '@/styles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface ISelectProps {
@@ -7,11 +7,21 @@ interface ISelectProps {
   selectList: { name: string; optionID: number }[];
   handleSelect: (optionID: number) => void;
   selectType?: 'color' | 'none';
+  tagList?: number[];
 }
 
-function Select({ label, selectList, handleSelect, selectType = 'none' }: ISelectProps) {
+function Select({ label, selectList, handleSelect, selectType = 'none', tagList }: ISelectProps) {
   const [selected, setSelected] = useState({ optionID: 0, name: '선택' });
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (tagList?.length !== 0) {
+      const selectedRoot = selectList.filter((select) => tagList?.includes(select.optionID));
+      setSelected(selectedRoot[0]);
+    } else {
+      setSelected({ optionID: 0, name: '선택' });
+    }
+  }, [tagList, selectList]);
 
   const handleOptionClicked = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     const { innerText } = e.currentTarget;

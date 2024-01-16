@@ -1,9 +1,21 @@
 'use client';
 
-import { useMutation, useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueries, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { getChildTagList, getRootTagList, postTag } from '../api/tag';
 import { useEffect, useState } from 'react';
 import { TagCreateParams, TagType } from '@/types';
+import { getCategories } from '../api/category';
+
+export const useArchiveTypes = () => {
+  const { data: archiveTypeList } = useSuspenseQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories(),
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  return { archiveTypeList };
+};
 
 export const useRootTag = (typeID: number) => {
   const { data: selectableTagList } = useQuery({

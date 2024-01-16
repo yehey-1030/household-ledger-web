@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { amountTostring } from '@/lib/utils/string';
-import { HashTagGroup, P } from '../common';
+import { HashTagGroup, IconButton, P } from '../common';
 import { ArchiveType, TagType } from '@/types';
 import { theme } from '@/styles';
 import DeleteLedgerButton from './DeleteLedgerButton';
 import { getValidKey } from '@/styles/color';
+import { useRouter } from 'next/navigation';
 
 interface ILedgerItemProps {
   ledgerID: number;
@@ -20,6 +21,7 @@ interface ILedgerItemProps {
 export default function LedgerItem(props: ILedgerItemProps) {
   const { title, date, amount, category, tags, memo, ledgerID } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const toShortDate = (target: string) => {
     const month = target.split('-')[1];
@@ -40,6 +42,11 @@ export default function LedgerItem(props: ILedgerItemProps) {
         <Memo>{memo}</Memo>
         <TagIconWrapper>
           <HashTagGroup tagList={tags ?? []} typeID={category.archiveTypeID.toString()} />
+          <IconButton
+            iconName="edit"
+            color={theme.color.GREY[200]}
+            onClick={() => router.push(`/ledger/${ledgerID}`)}
+          />
           <DeleteLedgerButton ledgerID={ledgerID} date={date} />
         </TagIconWrapper>
       </ExtendWrapper>
@@ -108,7 +115,7 @@ const ExtendWrapper = styled.div<{ isOpen: boolean }>`
 
 const TagIconWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2rem;
+  grid-template-columns: 1fr 2rem 2rem;
   column-gap: 1rem;
   grid-template-areas: 'tags icon';
 
