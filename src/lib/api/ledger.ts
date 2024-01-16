@@ -10,6 +10,10 @@ export const postLedger = (params: LedgerCreateParams) => {
   return apiClient.post(`/ledgers`, params).then((res) => res.data);
 };
 
+export const putLedger = (params: LedgerCreateParams, ledgerID: number) => {
+  return apiClient.put(`/ledgers`, { ...params, ledgerID }).then((res) => res.data);
+};
+
 export const deleteLedger = (param: number) => {
   return apiClient.delete(`ledgers/${param}`).then((res) => res.data);
 };
